@@ -1,0 +1,44 @@
+._tablepage .operate{
+    padding-bottom: 5px;
+}
+._tablepage .el-form-item {
+    margin-bottom: 20px;
+}
+.modal-footer{
+    text-align:left !important;
+    margin-top: -50px !important;
+    margin-left:50px !important;
+    max-height: 450px;
+    height:auto !important;
+    overflow-y: auto;
+}
+
+._login{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+._login .login_inner{
+    width: 460px;
+    /* height: 300px; */
+    margin-top: -150px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 25px #cac6c6;
+}
+._login .login_inner .form{
+    width: 300px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+._login .login_inner .form .title{
+    color: #505458;
+}
+
+._login .login_inner .error{
+    color: red;
+}
