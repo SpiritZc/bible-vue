@@ -5,33 +5,33 @@ export default {
       pageData:{
         //请求的url start
         requestUrl:{
-          listApi:"/api/sysProject/getTableList",//获取表格数据api
-          insertApi:"/api/sysProject/insert",//新增用api
-          updateApi:"/api/sysProject/update",//更新用api
-          getDetailApi:"/api/sysProject/getDetail",//获取详情用api
-          deleteOneApi:"/api/sysProject/delete",//单条删除api
-          deleteBatchApi:"/api/sysProject/deletebatch",//批量删除api
+          listApi:"/api/sysUser/getTableList",//获取表格数据api
+          insertApi:"/api/sysUser/insert",//新增用api
+          updateApi:"/api/sysUser/update",//更新用api
+          getDetailApi:"/api/sysUser/getDetail",//获取详情用api
+          deleteOneApi:"/api/sysUser/delete",//单条删除api
+          deleteBatchApi:"/api/sysUser/deletebatch",//批量删除api
           getRolesApi:"/api/sysRole/getRoles",//获取角色
         },
         //请求的url end
         //查询表单内容 start
         searchForm:[
-          {type:'Input',label:'项目名称',prop:'projectName'},
-          {type:'Input',label:'用户姓名',prop:'userRealName'},
-          {type:'Select',label:'是否锁定',prop:'userLocked',options:this.selectUtil.yesNo,props:this.commonConstants.props,},
+          {type:'Input',label:'登陆名',prop:'accountName'},
+          {type:'Input',label:'真实姓名',prop:'userName'},
+          {type:'Select',label:'是否锁定',prop:'status',options:this.selectUtil.status,props:this.commonConstants.props,},
           {type:'Select',label:'是否管理员',prop:'isAdmin',options:this.selectUtil.yesNo,props:this.commonConstants.props,},
         ],
         //查询表单内容 end
         //查询条件 start
         queryData:{
-          userName:"",//用户登录名
-          userRealName:"",//用户真实姓名
+          accountName:"",//用户登录名
+          userName:"",//用户真实姓名
           password:"",//用户密码
           userEmail:"",//用户邮箱，唯一
           userPhone:"",//座机
           userMobile:"",//手机，唯一
           userHead:"",//用户头像
-          userLocked:"",//用户是否锁定 1是 2否
+          status:"",//用户是否锁定 1是 2否
         },
         //查询条件 end
         //查询表单按钮start
@@ -60,13 +60,13 @@ export default {
         //表格分页信息end
         //表格列表头start
         tableCols:[
-          {label:'用户登录名',prop:'projectName',align:'center'},
-          {label:'用户姓名',prop:'userRealName',align:'center'},
+          {label:'用户登录名',prop:'accountName',align:'center'},
+          {label:'用户姓名',prop:'userName',align:'center'},
           {label:'用户邮箱',prop:'userEmail',align:'center'},
           {label:'座机',prop:'userPhone',align:'center'},
-          {label:'手机',prop:'userMobile',align:'center'},
+          {label:'手机',prop:'userPhone',align:'center'},
           {label:'是否管理员',prop:'isAdmin',align:'center',formatter:this.commonUtil.getCodeName},
-          {label:'是否锁定',prop:'userLocked',align:'center',formatter:this.commonUtil.getCodeName},
+          {label:'是否锁定',prop:'status',align:'center',formatter:this.commonUtil.getCodeName},
           {label:'操作',prop:'operation',align:'center',type:'button',btnList:[
             {label:'查看',type:'text',auth:'sysUser_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
             {label:'编辑',type:'text',auth:'sysUser_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
@@ -86,14 +86,14 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-          {type:'Input',label:'项目编码',prop:'projectCode',rules:{required:true,maxLength:40}},
-          {type:'Input',label:'项目名称',prop:'projectName',rules:{required:true,maxLength:40}},
+          {type:'Input',label:'项目编码',prop:'accountName',rules:{required:true,maxLength:40}},
+          {type:'Input',label:'项目名称',prop:'userName',rules:{required:true,maxLength:40}},
         ],
         //modal表单 end
         //modal 数据 start
         modalData : {//modal页面数据
-          projectCode:"",//用户登录名 
-          projectName:"",//用户真实姓名 
+          accountName:"",//用户登录名 
+          userName:"",//用户真实姓名 
         },
         //modal 数据 end
         //modal 按钮 start

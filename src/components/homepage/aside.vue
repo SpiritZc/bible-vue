@@ -61,7 +61,6 @@ export default {
     };
   },
   created() {
-     
     bus.$on("navShowChange", navShow => {
       this.navShow = navShow;
     });
