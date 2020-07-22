@@ -116,8 +116,8 @@ export default {
                 sessionStorage.setItem(this.commonConstants.sessionItem.isAdmin, responseData.isAdmin); //是否超级管理员
                 sessionStorage.setItem(this.commonConstants.sessionItem.position, responseData.roleName); //用户职位
                 sessionStorage.setItem(this.commonConstants.sessionItem.userName, responseData.userName); //用户名
-                sessionStorage.setItem(this.commonConstants.sessionItem.apiList, responseData.promissionCodes);//接口权限，用于判断页面按钮是否显示
-                sessionStorage.setItem(this.commonConstants.sessionItem.authorization, responseData.token);//
+                sessionStorage.setItem(this.commonConstants.sessionItem.apiList, responseData.functions);//接口权限，用于判断页面按钮是否显示
+                sessionStorage.setItem(this.commonConstants.sessionItem.authorization, responseData.token);//token
                 // this.commonUtil.initCodeTypeValue();//数据字典初始化
                 this.$router.replace({ path: "/index" });
                 this.setCookie('accountName',responseData.accountName);
@@ -253,7 +253,7 @@ export default {
   color: #fff;
   font-family: "Source Sans Pro";
   background-size: 100% 100%;
-  background-image: url("../../static/img/background.png");
+  background-image: url("../../static/img/background.jpg");
   position: relative;
   #bgd {
     height: 100vh;

@@ -23,14 +23,14 @@
             <span>{{menu_one.title}}</span>
           </template>
 
-          <el-menu-item
+          <el-menu-iteml-menu-item
             v-for="(menu_two,i) in menu_one.subs"
             :key="i"
             :index="menu_two.path"
           >
             <i :class="menu_two.icon"></i>
             <span>{{menu_two.title}}</span>
-          </el-menu-item>
+          </el-menu-iteml-menu-item>
         </el-submenu>
       </template>
     </el-menu>
@@ -61,7 +61,6 @@ export default {
     };
   },
   created() {
-     
     bus.$on("navShowChange", navShow => {
       this.navShow = navShow;
     });
