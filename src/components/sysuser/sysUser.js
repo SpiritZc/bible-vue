@@ -5,12 +5,12 @@ export default {
       pageData:{
         //请求的url start
         requestUrl:{
-          listApi:"/api/sysProject/getTableList",//获取表格数据api
-          insertApi:"/api/sysProject/insert",//新增用api
-          updateApi:"/api/sysProject/update",//更新用api
-          getDetailApi:"/api/sysProject/getDetail",//获取详情用api
-          deleteOneApi:"/api/sysProject/delete",//单条删除api
-          deleteBatchApi:"/api/sysProject/deletebatch",//批量删除api
+          listApi:"/api/sysUser/getTableList",//获取表格数据api
+          insertApi:"/api/sysUser/insert",//新增用api
+          updateApi:"/api/sysUser/update",//更新用api
+          getDetailApi:"/api/sysUser/getDetail",//获取详情用api
+          deleteOneApi:"/api/sysUser/delete",//单条删除api
+          deleteBatchApi:"/api/sysUser/deletebatch",//批量删除api
           getRolesApi:"/api/sysRole/getRoles",//获取角色
         },
         //请求的url end
