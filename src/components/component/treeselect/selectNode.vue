@@ -35,7 +35,7 @@
 <script>
     export default {
         name: 'SelectTree',
-        // 设置绑定参数
+        // 设置绑定参数// 设置绑定参数
         model: {
             prop: 'value',
             event: 'selected',

@@ -26,7 +26,7 @@
             :node-key="props.value"
             :load="loadNode"
             :lazy="lazy"
-            :show-checkbox="true"
+            :show-checkbox="true" 
             :check-strictly="checkStrictly"
             @check-change="handleCheckChange"
             >
