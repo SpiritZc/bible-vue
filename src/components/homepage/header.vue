@@ -5,7 +5,7 @@
         <li class="collapse-btn" @click="navChangeShow">
           <i class="el-icon-menu"></i>
         </li>
-        <li class="nohover">易复诊互联网平台</li>
+        <li class="nohover">圣经项目运营平台</li>
       </ul>
     </div>
     <div class="right">

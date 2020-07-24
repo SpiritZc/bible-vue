@@ -5,21 +5,21 @@ export default {
       pageData:{
         //请求的url start
         requestUrl:{
-          listApi:"/api/userRole/getTableList",//获取表格数据api
-          insertApi:"/api/userRole/insert",//新增用api
-          updateApi:"/api/userRole/update",//更新用api
-          getDetailApi:"/api/userRole/getDetail",//获取详情用api
-          deleteOneApi:"/api/userRole/delete",//单条删除api
-          deleteBatchApi:"/api/userRole/deletebatch",//批量删除api
+          listApi:"/api/sysRole/getTableList",//获取表格数据api
+          insertApi:"/api/sysRole/insert",//新增用api
+          updateApi:"/api/sysRole/update",//更新用api
+          getDetailApi:"/api/sysRole/getDetail",//获取详情用api
+          deleteOneApi:"/api/sysRole/delete",//单条删除api
+          deleteBatchApi:"/api/sysRole/deletebatch",//批量删除api
           getOrgTreeApi:"/api/sysOrg/getNextLayer",//获取组织机构树api
           getAuthTreeApi:"/api/sysMenu/getAuthTree",//获取角色授权树api
-          authApi:"/api/userRole/authed",//授权api
+          authApi:"/api/sysRole/authed",//授权api
         },
         //请求的url end
         //查询表单内容 start
         searchForm:[
-					{type:'Input',label:'角色代码',prop:'userRoleCode'},
-					{type:'Input',label:'角色名称',prop:'userRoleName'},
+					{type:'Input',label:'角色代码',prop:'roleCode'},
+          {type:'Input',label:'角色名称',prop:'roleName'},
         ],
         //查询表单内容 end
         //查询条件 start
@@ -31,8 +31,8 @@ export default {
         //查询条件 end
         //查询表单按钮start
         searchHandle:[
-          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'userRole_search'},
-          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'userRole_search'}
+          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'sysRole_search'},
+          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'sysRole_search'}
         ],
         //查询表单按钮end
         //表格数据start
@@ -40,8 +40,8 @@ export default {
         //表格数据end
         //表格工具栏按钮 start
         tableHandles:[
-          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'userRole_insert'},
-          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'userRole_batchdelete'}
+          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'sysRole_insert'},
+          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'sysRole_batchdelete'}
         ],
         //表格工具栏按钮 end
         selectList:[],//表格选中的数据
@@ -55,15 +55,15 @@ export default {
         //表格分页信息end
         //表格列表头start
         tableCols:[
-					{label:'角色代码',prop:'userRoleCode',align:'center'},
-          {label:'角色名称',prop:'userRoleName',align:'center'},
-          {label:'所属组织',prop:'orgName',align:'center'},
-					{label:'角色描述',prop:'description',align:'center'},
+					{label:'角色代码',prop:'roleCode',align:'center'},
+          {label:'角色名称',prop:'roleName',align:'center'},
+          // {label:'所属组织',prop:'orgName',align:'center'},
+					{label:'角色描述',prop:'roleDesc',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
-						{label:'查看',type:'text',auth:'userRole_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
-            {label:'编辑',type:'text',auth:'userRole_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
-            {label:'权限配置',type:'text',auth:'userRole_auth',handle:(row)=>this.showAuthModal(row.id)},
-						{label:'删除',type:'text',auth:'userRole_delete',handle:(row)=>this.deleteOne(row.id)},
+						{label:'查看',type:'text',auth:'sysRole_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
+            {label:'编辑',type:'text',auth:'sysRole_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
+            {label:'权限配置',type:'text',auth:'sysRole_auth',handle:(row)=>this.showAuthModal(row.id)},
+						{label:'删除',type:'text',auth:'sysRole_delete',handle:(row)=>this.deleteOne(row.id)},
 					]}
         ],
         //表格列表头end
@@ -79,8 +79,8 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'角色代码',prop:'userRoleCode',rules:{required:true,maxLength:20}},
-					{type:'Input',label:'角色名称',prop:'userRoleName',rules:{required:true,maxLength:40}},
+					{type:'Input',label:'角色代码',prop:'roleCode',rules:{required:true,maxLength:20}},
+					{type:'Input',label:'角色名称',prop:'roleName',rules:{required:true,maxLength:40}},
           {type:'Input',label:'角色描述',prop:'description',rules:{required:false,maxLength:100}},
           {type:'TreeSelect',label:'所属组织',prop:'orgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
         ],

@@ -30,7 +30,6 @@ Vue.use(ElementUI)
 //后引入路由,组件内样式可以覆盖elementui样式
 import router from './router'
 
-//11111111111111111111111111111111
 
 //2.引入axios
 import axios from 'axios';

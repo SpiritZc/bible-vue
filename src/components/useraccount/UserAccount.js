@@ -12,7 +12,7 @@ export default {
           deleteOneApi:"/api/sysUser/delete",//单条删除api
           deleteBatchApi:"/api/sysUser/deletebatch",//批量删除api
           getOrgTreeApi:"/api/sysOrg/getNextLayer",//获取组织机构树api
-          getOrgRolesApi:"/api/userRole/getOrgRoles",//获取组织对应的角色api
+          getRolesApi:"/api/sysRole/getRoles",//获取角色列表
           resetPwdApi:"/api/sysUser/resetPwd",//重置密码api
           updateStatusApi:"/api/sysUser/updateStatus",//启用停用
         },
@@ -22,7 +22,7 @@ export default {
 					{type:'Input',label:'账户名',prop:'accountName'},
 					{type:'Input',label:'用户姓名',prop:'userName'},
 					// {type:'Input',label:'手机号',prop:'userMobile'},
-					{type:'Input',label:'电话',prop:'userPhone'},
+					{type:'Input',label:'手机号',prop:'userPhone'},
         ],
         //查询表单内容 end
         //查询条件 start
@@ -37,8 +37,8 @@ export default {
         //查询条件 end
         //查询表单按钮start
         searchHandle:[
-          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'userAccount_search'},
-          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'userAccount_search'}
+          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'sysUser_search'},
+          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'sysUser_search'}
         ],
         //查询表单按钮end
         //表格数据start
@@ -46,8 +46,8 @@ export default {
         //表格数据end
         //表格工具栏按钮 start
         tableHandles:[
-          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'userAccount_insert'},
-          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'userAccount_batchdelete'}
+          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'sysUser_insert'},
+          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'sysUser_batchdelete'}
         ],
         //表格工具栏按钮 end
         selectList:[],//表格选中的数据
@@ -111,7 +111,6 @@ export default {
 					userEmail:"",//邮箱 
           accountDesc:"",//账户描述 
           roleId:"",//角色id
-          orgId:"",//组织id
         },
         //modal 数据 end
         //modal 按钮 start
@@ -159,7 +158,7 @@ export default {
       {
         this.getDetail(id);
       }
-      this.getOrgTree();
+      // this.getOrgTree();
     },
     /**
      * @description: 获取详细数据
@@ -174,25 +173,25 @@ export default {
       }
       this.commonUtil.doGet(obj).then(response=>{
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
-        var orgNames="";
-        var orgIds = "";
-        if(response.responseData.orgs && response.responseData.orgs.length>0)
-        {
-          for (let index = 0; index < response.responseData.orgs.length; index++) {
-            if(index==response.responseData.orgs.length-1)
-            {
-              orgNames = orgNames + response.responseData.orgs[index].orgName;
-              orgIds = orgIds + response.responseData.orgs[index].id;
-            }else{
-              orgNames = orgNames + response.responseData.orgs[index].orgName+",";
-              orgIds = orgIds + response.responseData.orgs[index].id+",";
-            }
-          }
-        }
-        this.pageData.modalData.orgId = orgIds;
-        this.$refs.modalRef.$refs.select[0].labelModel = orgNames;
+        // var orgNames="";
+        // var orgIds = "";
+        // if(response.responseData.orgs && response.responseData.orgs.length>0)
+        // {
+        //   for (let index = 0; index < response.responseData.orgs.length; index++) {
+        //     if(index==response.responseData.orgs.length-1)
+        //     {
+        //       orgNames = orgNames + response.responseData.orgs[index].orgName;
+        //       orgIds = orgIds + response.responseData.orgs[index].id;
+        //     }else{
+        //       orgNames = orgNames + response.responseData.orgs[index].orgName+",";
+        //       orgIds = orgIds + response.responseData.orgs[index].id+",";
+        //     }
+        //   }
+        // }
+        // this.pageData.modalData.orgId = orgIds;
+        // this.$refs.modalRef.$refs.select[0].labelModel = orgNames;
         if(response.responseData.userRole){
-          this.pageData.modalForm[6].options = [{"id":response.responseData.userRole.id,"userRoleName":response.responseData.userRole.userRoleName}];
+          this.pageData.modalForm[4].options = [{"id":response.responseData.userRole.id,"roleName":response.responseData.userRole.roleName}];
           this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
           this.pageData.modalData.roleId = response.responseData.userRole.id;
         }
@@ -208,7 +207,7 @@ export default {
       this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
       this.pageData.modalConfig.show = false;//关闭modal
       this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
-      this.$refs.modalRef.$refs.select[0].labelModel = "";
+      // this.$refs.modalRef.$refs.select[0].labelModel = "";
     },
     /**
      * @description: 保存数据
@@ -219,8 +218,8 @@ export default {
     save(){
       this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
         if (valid) {
-          var orgIds = this.pageData.modalData.orgId.split(",")
-          this.pageData.modalData.orgIds = orgIds;
+          // var orgIds = this.pageData.modalData.orgId.split(",")
+          // this.pageData.modalData.orgIds = orgIds;
             var obj = {
               params:this.pageData.modalData,
               removeEmpty:false,
@@ -311,18 +310,18 @@ export default {
      * @author: caiyang
      */    
     roleFocus(){
-      this.pageData.modalForm[6].options = [];
-      if(!this.pageData.modalData.orgId)
-      {
-        this.commonUtil.showMessage({message:this.commonUtil.getMessageFromList("error.org.role.param",null),type: this.commonConstants.messageType.error});
-        return;
-      }
+      this.pageData.modalForm[4].options = [];
+      // if(!this.pageData.modalData.orgId)
+      // {
+      //   this.commonUtil.showMessage({message:this.commonUtil.getMessageFromList("error.org.role.param",null),type: this.commonConstants.messageType.error});
+      //   return;
+      // }
       var obj = {
-        params:{orgIds:this.pageData.modalData.orgId.split(",")},
-        url:this.pageData.requestUrl.getOrgRolesApi
+        // params:{orgIds:this.pageData.modalData.orgId.split(",")},
+        url:this.pageData.requestUrl.getRolesApi
       };
-      this.commonUtil.doPost(obj) .then(response=>{
-        this.pageData.modalForm[6].options = response.responseData;
+      this.commonUtil.doGet(obj) .then(response=>{
+        this.pageData.modalForm[4].options = response.responseData;
         this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
       });
     },

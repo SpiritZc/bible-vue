@@ -22,6 +22,18 @@ selectUtil.yesNo=[
 ]
 
 /**
+ * @description: 用户锁定状态
+ * @param {type} 
+ * @return: 
+ * @author: caiyang
+ */
+selectUtil.status=[
+    {value:1,label:"正常"},
+    {value:2,label:"锁定"},
+]
+
+
+/**
  * @description: 菜单访问规则
  * @param {type} 
  * @return: 
