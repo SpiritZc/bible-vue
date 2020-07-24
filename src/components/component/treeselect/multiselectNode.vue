@@ -39,9 +39,14 @@
     export default {
         name: 'MultiSelectTree',
         // 设置绑定参数
+         /**  https://blog.csdn.net/tangcc110/article/details/83624333 还不懂看这
+         * vue提供model属性让我们在组件内部就可以调用到其父级的事件，
+         * 当前父级事件是固定写法event:"zhangwuji",这个prop:"ychecked"是
+         * 将父级的cstChecked赋值给ychecked，然后再传给props:{ychecked:Number}
+         * */
         model: {
-            prop: 'value',
-            event: 'selected',
+            prop: 'value', // ychecked与父级cstChecked联动
+            event: 'selected', // 事件名随便定义，叫张无忌都可以，反正有了model后就可以触发父组件的事件了，zhangwujijt
         },
         data() {
             return {
@@ -53,7 +58,7 @@
         },
         props: {
             // 接收绑定参数
-            value: [String],
+            value: [String], // 父级cstChecked传进来会默认赋值给了model{prop:"ychecked"},ychecked再把值赋给props:{ ychcked:Number }
             // 树形控件 - 选项数据，懒加载时无需设置
             options: {
                 type: Array,
@@ -110,8 +115,12 @@
                     arrLabel.push(item[this.props.label]);
                     arr.push(item[this.props.value]);
                 });
-                this.labelModel = arrLabel.join(',');
+                this.labelModel = arrLabel.join(',');   
                 this.valueModel = arr.join(',');
+                 /**
+                     * vue自带的$emit方法是专门用来触发父级事件的，如父级：<cst-test v-model="cstChecked"></cst-test> ，此处v-model 跟上面的定义model有关联，
+                     * 当zhangwuji事件触发后会默认把值传给prop:'ychecked'，从而改变了在父级传入的变量cstChecked
+                     * */
                 this.$emit('selected', this.valueModel);
             }
         },

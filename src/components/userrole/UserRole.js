@@ -81,16 +81,16 @@ export default {
         modalForm:[
 					{type:'Input',label:'角色代码',prop:'roleCode',rules:{required:true,maxLength:20}},
 					{type:'Input',label:'角色名称',prop:'roleName',rules:{required:true,maxLength:40}},
-          {type:'Input',label:'角色描述',prop:'description',rules:{required:false,maxLength:100}},
-          {type:'TreeSelect',label:'所属组织',prop:'orgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
+          // {type:'Input',label:'角色描述',prop:'description',rules:{required:false,maxLength:100}},
+          // {type:'TreeSelect',label:'所属组织',prop:'orgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
         ],
         //modal表单 end
         //modal 数据 start
         modalData : {//modal页面数据
-					userRoleCode:"",//角色代码 
-					userRoleName:"",//角色名称 
-          description:"",//角色描述 
-          orgId:"",//组织id
+					roleCode:"",//角色代码 
+					roleName:"",//角色名称 
+          // description:"",//角色描述 
+          // orgId:"",//组织id
         },
         //modal 数据 end
         //modal 按钮 start
@@ -156,7 +156,7 @@ export default {
       {
         this.getDetail(id);
       }
-      this.getOrgTree();
+      // this.getOrgTree();
     },
     /**
      * @description: 获取详细数据
@@ -171,7 +171,7 @@ export default {
       }
       this.commonUtil.doGet(obj).then(response=>{
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
-        this.$refs.modalRef.$refs.select[0].labelModel = response.responseData.orgName;
+        // this.$refs.modalRef.$refs.select[0].labelModel = response.responseData.orgName;
       });
     },
     /**
@@ -184,7 +184,7 @@ export default {
       this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
       this.pageData.modalConfig.show = false;//关闭modal
       this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
-      this.$refs.modalRef.$refs.select[0].labelModel = "";
+      // this.$refs.modalRef.$refs.select[0].labelModel = "";
     },
     /**
      * @description: 保存数据

@@ -74,7 +74,7 @@ export default {
 						{label:'查看',type:'text',auth:'sysUser_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
             {label:'编辑',type:'text',auth:'sysUser_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
             {label:'重置密码',type:'text',auth:'sysUser_resetpwd',handle:(row)=>this.resetPwd(row.id)},
-            {label:this.label,type:'text',auth:'sysUser_status',handle:(row)=>this.updateStatus(row)},
+            {label:(row)=>this.label(row),type:'text',auth:'sysUser_status',handle:(row)=>this.updateStatus(row)},
 						{label:'删除',type:'text',auth:'sysUser_delete',handle:(row)=>this.deleteOne(row.id)},
 					]}
         ],
@@ -99,7 +99,7 @@ export default {
           // {type:'TreeSelect',label:'所属组织',prop:'parentOrgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
           // {type:'MultiTreeSelect',label:'所属组织',prop:'orgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
           {type:'Select',label:'用户角色',prop:'roleId',rules:{required:true},props:{label:'userRoleName',value:'id'},focus:()=>this.roleFocus(),ref:"roleSelect"},
-					{type:'Input',label:'账户描述',prop:'accountDesc',rules:{required:false,maxLength:500}},
+					// {type:'Input',label:'账户描述',prop:'accountDesc',rules:{required:false,maxLength:500}},
         ],
         //modal表单 end
         //modal 数据 start
@@ -190,10 +190,10 @@ export default {
         // }
         // this.pageData.modalData.orgId = orgIds;
         // this.$refs.modalRef.$refs.select[0].labelModel = orgNames;
-        if(response.responseData.userRole){
-          this.pageData.modalForm[4].options = [{"id":response.responseData.userRole.id,"roleName":response.responseData.userRole.roleName}];
+        if(response.responseData.sysRole){
+          this.pageData.modalForm[4].options = [{"id":response.responseData.sysRole.id,"roleName":response.responseData.sysRole.roleName}];
           this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
-          this.pageData.modalData.roleId = response.responseData.userRole.id;
+          this.pageData.modalData.roleId = response.responseData.sysRole.id;
         }
       });
     },
@@ -348,6 +348,7 @@ export default {
     },
     //启用停用显示
     label(row){
+      console.log(row)
       if(row.status == 1)
       {
         return "停用";
