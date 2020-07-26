@@ -7,6 +7,7 @@
  * @LastEditTime: 2020-07-08 10:13:06
 --> 
 <template>
+                
     <div  class="_tablepage">
         <searchForm  :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
         </searchForm>

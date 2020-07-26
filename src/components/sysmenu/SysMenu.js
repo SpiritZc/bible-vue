@@ -58,7 +58,7 @@ export default {
             {label:'访问规则',prop:'rule',align:'center',codeType:'menuRule',formatter:this.commonUtil.getTableCodeName},
             {label:'是否隐藏',prop:'isHidden',align:'center',codeType:'yesNo',formatter:this.commonUtil.getTableCodeName},
             {label:'菜单类型',prop:'menuType',align:'center',codeType:'menuType',formatter:this.commonUtil.getTableCodeName},
-            {label:'class属性',prop:'clazz',align:'center'},
+            // {label:'class属性',prop:'clazz',align:'center'},
             {label:'操作',prop:'operation',align:'center',type:'button',btnList:[
               {label:'查看',type:'text',auth:'sysMenu_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
               {label:'编辑',type:'text',auth:'sysMenu_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
@@ -86,7 +86,7 @@ export default {
           {type:'Select',label:'是否隐藏',prop:'isHidden',rules:{required:true},options:this.selectUtil.yesNo},
           {type:'Select',label:'菜单类型',prop:'menuType',rules:{required:true},options:this.selectUtil.menuType},
           {type:'Select',label:'上级菜单',prop:'parentMenuId',rules:{required:false},props:{label:'menuName',value:'id'},focus:this.getAllMenus},
-          {type:'Input',label:'class属性',prop:'clazz',rules:{required:false,maxLength:200}},
+          // {type:'Input',label:'class属性',prop:'clazz',rules:{required:false,maxLength:200}},
         ],
         //modal表单 end
         //modal 数据 start

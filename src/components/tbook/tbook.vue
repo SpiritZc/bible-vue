@@ -1,9 +1,10 @@
+
 <!--
  * @Description: 
  * @Version: 1.0
- * @Autor: caiyang
+ * @Autor: zhangcheng
  * @Date: 2020-06-15 16:39:44
- * @LastEditors: caiyang
+ * @LastEditors: zhangcheng
  * @LastEditTime: 2020-07-07 19:46:18
 --> 
 <template>
@@ -27,4 +28,4 @@
        @closeModal="closeModal"></modal>
     </div>
 </template>
-<script src="./sysUser.js"></script>
+<script src="./tbook.js"></script>

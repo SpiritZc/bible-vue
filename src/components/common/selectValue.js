@@ -119,10 +119,28 @@ selectUtil.hospitalType=[
     {value:'专科医院',label:"专科医院"},
 ]
 
-selectUtil.menuType=[
-    {value:1,label:"运营后台菜单"},
-    {value:2,label:"医生PC端菜单"},
+/**
+ * @description: 图书状态
+ * @param {type} 
+ * @return: 
+ * @author: caiyang
+ */
+selectUtil.bookState=[
+    {value:'1',label:"已上架"},
+    {value:'2',label:"已下架"},
 ]
+
+/**
+ * @description: 菜单类型
+ * @param {type} 
+ * @return: 
+ * @author: caiyang
+ */
+selectUtil.menuType=[
+    {value:1,label:"管理后台菜单"},
+    {value:2,label:"小程序菜单"},
+]
+
 selectUtil.gender=[
     {value:"男",label:"男"},
     {value:"女",label:"女"},

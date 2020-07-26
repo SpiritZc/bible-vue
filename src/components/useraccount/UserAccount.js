@@ -98,7 +98,7 @@ export default {
           {type:'Input',label:'邮箱',prop:'userEmail',rules:{required:false,maxLength:50,type:'email'}},
           // {type:'TreeSelect',label:'所属组织',prop:'parentOrgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
           // {type:'MultiTreeSelect',label:'所属组织',prop:'orgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
-          {type:'Select',label:'用户角色',prop:'roleId',rules:{required:true},props:{label:'userRoleName',value:'id'},focus:()=>this.roleFocus(),ref:"roleSelect"},
+          {type:'Select',label:'用户角色',prop:'roleId',rules:{required:true},props:{label:'roleName',value:'id'},focus:()=>this.roleFocus(),ref:"roleSelect"},
 					// {type:'Input',label:'账户描述',prop:'accountDesc',rules:{required:false,maxLength:500}},
         ],
         //modal表单 end
