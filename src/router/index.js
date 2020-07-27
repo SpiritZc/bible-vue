@@ -96,67 +96,11 @@ const router = new Router({
           }
         },
         {
-          path: '/hospitalApply',
-          name: 'hospitalApply',
-          component: () => import('@/components/hospitalapply/hospitalApply.vue'),
+          path: '/tBook',
+          name: 'tBook',
+          component: () => import('@/components/tbook/tbook.vue'),
           meta: {
-            title: '医院入驻申请',
-          }
-        },
-        {
-          path: '/doctorApply',
-          name: 'doctorApply',
-          component: () => import('@/components/doctorapply/doctorApply.vue'),
-          meta: {
-            title: '医生入驻申请',
-          }
-        },
-        {
-          path: '/hospitalDetail',
-          name: 'hospitalDetail',
-          component: () => import('@/components/hospitaldetail/HospitalDetail.vue'),
-          meta: {
-            title: '医院档案',
-          }
-        },
-        {
-          path: '/hospitaldepartment',
-          name: 'hospitaldepartment',
-          component: () => import('@/components/hospitaldepartment/HospitalDepartment.vue'),
-          meta: {
-            title: '医院科室',
-          }
-        },
-        {
-          path: '/doctorDetail',
-          name: 'doctorDetail',
-          component: () => import('@/components/doctordetail/DoctorDetail.vue'),
-          meta: {
-            title: '医生档案',
-          }
-        },
-        {
-          path: '/patientDetail',
-          name: 'patientDetail',
-          component: () => import('@/components/patientdetail/PatientDetail.vue'),
-          meta: {
-            title: '患者档案',
-          }
-        },
-        {
-          path: '/systemDept',
-          name: 'systemDept',
-          component: () => import('@/components/primarydept/PrimaryDept.vue'),
-          meta: {
-            title: '一级科室库',
-          }
-        },
-        {
-          path: '/secondDept',
-          name: 'secondDept',
-          component: () => import('@/components/seconddept/SecondDept.vue'),
-          meta: {
-            title: '二级科室库',
+            title: '书籍信息',
           }
         },
         

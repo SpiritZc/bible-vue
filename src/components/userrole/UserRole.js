@@ -79,9 +79,9 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'角色代码',prop:'roleCode',rules:{required:true,maxLength:20}},
-					{type:'Input',label:'角色名称',prop:'roleName',rules:{required:true,maxLength:40}},
-          // {type:'Input',label:'角色描述',prop:'description',rules:{required:false,maxLength:100}},
+					{type:'Input',label:'角色代码',prop:'roleCode',rules:{required:true,maxLength:30}},
+					{type:'Input',label:'角色名称',prop:'roleName',rules:{required:true,maxLength:50}},
+          {type:'Input',label:'角色描述',prop:'roleDesc',rules:{required:false,maxLength:255}},
           // {type:'TreeSelect',label:'所属组织',prop:'orgId',rules:{required:true},props:{parent: 'parentOrgId',value: 'id',label: 'orgName',children: 'children'},data:[],ref:'select',url:"/api/sysOrg/getNextLayer"},
         ],
         //modal表单 end
@@ -89,7 +89,7 @@ export default {
         modalData : {//modal页面数据
 					roleCode:"",//角色代码 
 					roleName:"",//角色名称 
-          // description:"",//角色描述 
+          roleDesc:"",//角色描述 
           // orgId:"",//组织id
         },
         //modal 数据 end
@@ -181,9 +181,10 @@ export default {
      * @author: caiyang
      */    
     closeModal(){
-      this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
+      
       this.pageData.modalConfig.show = false;//关闭modal
-      this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
+      // this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
+      this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
       // this.$refs.modalRef.$refs.select[0].labelModel = "";
     },
     /**

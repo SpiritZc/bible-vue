@@ -204,9 +204,10 @@ export default {
      * @author: caiyang
      */    
     closeModal(){
-      this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
+      
       this.pageData.modalConfig.show = false;//关闭modal
-      this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
+      // this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
+      this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
       // this.$refs.modalRef.$refs.select[0].labelModel = "";
     },
     /**

@@ -16,15 +16,15 @@ export default {
           //查询表单内容 start
           searchForm:[
                       {type:'Input',label:'书籍名称',prop:'bookName'},
-                      {type:'Input',label:'拼音',prop:'pinyin'},
+                      // {type:'Input',label:'拼音',prop:'pinyin'},
                       {type:'Select',label:'书籍类别',prop:'cid',props:{label:'name',value:'id'},focus:this.getaAllCategory},
                       {type:'Input',label:'作者',prop:'author'},
-                      {type:'Input',label:'图片路径',prop:'image'},
-                      {type:'Input',label:'描述',prop:'description'},
-                      {type:'Input',label:'书籍状态（1 已上架 2 已下架 默认值1 ）',prop:'state'},
+                      // {type:'Input',label:'图片路径',prop:'image'},
+                      // {type:'Input',label:'描述',prop:'description'},
+                      {type:'Input',label:'书籍状态',prop:'state'},
                       {type:'Input',label:'上架时间',prop:'deploytime'},
-                      {type:'Input',label:'浏览次数',prop:'hits'},
-                      {type:'Input',label:'书籍的路径',prop:'url'},
+                      // {type:'Input',label:'浏览次数',prop:'hits'},
+                      // {type:'Input',label:'书籍的路径',prop:'url'},
           ],
           //查询表单内容 end
           //查询条件 start
@@ -71,12 +71,12 @@ export default {
                       {label:'拼音',prop:'pinyin',align:'center'},
                       {label:'书籍类别',prop:'cid',align:'center'},
                       {label:'作者',prop:'author',align:'center'},
-                      {label:'图片路径',prop:'image',align:'center'},
+                      // {label:'图片路径',prop:'image',align:'center'},
                       {label:'描述',prop:'description',align:'center'},
-                      {label:'书籍状态（1 已上架 2 已下架 默认值1 ）',prop:'state',align:'center'},
+                      {label:'书籍状态',prop:'state',align:'center'},
                       {label:'上架时间',prop:'deploytime',align:'center'},
                       {label:'浏览次数',prop:'hits',align:'center'},
-                      {label:'书籍的路径',prop:'url',align:'center'},
+                      // {label:'书籍的路径',prop:'url',align:'center'},
                       {label:'操作',prop:'operation',align:'center',type:'button',btnList:[
                           {label:'查看',type:'text',auth:'tBook_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
                           {label:'编辑',type:'text',auth:'tBook_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
@@ -102,9 +102,9 @@ export default {
                       {type:'Input',label:'作者',prop:'author',rules:{required:true,maxLength:100}},
                       {type:'Input',label:'图片路径',prop:'image',rules:{required:true,maxLength:150}},
                       {type:'Input',label:'描述',prop:'description',rules:{required:true,maxLength:255}},
-                      {type:'Input',label:'书籍状态（1 已上架 2 已下架 默认值1 ）',prop:'state',rules:{required:true,type:'number'},options:this.selectUtil.bookState},
+                      {type:'Input',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
                       {type:'Input',label:'上架时间',prop:'deploytime',rules:{required:true}},
-                      {type:'Input',label:'浏览次数',prop:'hits',rules:{required:true,type:'number'}},
+                      {type:'Input',label:'浏览次数',prop:'hits',rules:{required:true}},
                       {type:'Input',label:'书籍的路径',prop:'url',rules:{required:true,maxLength:150}},
           ],
           //modal表单 end
@@ -191,9 +191,9 @@ export default {
        * @author: caiyang
        */    
       closeModal(){
-        this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
         this.pageData.modalConfig.show = false;//关闭modal
-        this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
+        // this.commonUtil.clearObj(this.pageData.modalData);//清空modalData
+        this.$refs['modalRef'].$refs['modalFormRef'].resetFields();//校验重置
       },
       /**
        * @description: 保存数据
