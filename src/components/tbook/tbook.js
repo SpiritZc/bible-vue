@@ -100,7 +100,7 @@ export default {
                       {type:'Input',label:'拼音',prop:'pinyin',rules:{required:true,maxLength:100}},
                       {type:'Input',label:'书籍类别',prop:'cid',rules:{required:true}},
                       {type:'Input',label:'作者',prop:'author',rules:{required:true,maxLength:100}},
-                      {type:'Input',label:'图片路径',prop:'image',rules:{required:true,maxLength:150}},
+                      {type:'Upload',label:'图片路径',prop:'image',rules:{required:true,maxLength:150}},
                       {type:'Input',label:'描述',prop:'description',rules:{required:true,maxLength:255}},
                       {type:'Input',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
                       {type:'Input',label:'上架时间',prop:'deploytime',rules:{required:true}},
