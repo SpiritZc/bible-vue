@@ -100,26 +100,29 @@ export default {
                       {type:'Input',label:'拼音',prop:'pinyin',rules:{required:true,maxLength:100}},
                       {type:'Input',label:'书籍类别',prop:'cid',rules:{required:true}},
                       {type:'Input',label:'作者',prop:'author',rules:{required:true,maxLength:100}},
-                      {type:'Input',label:'图片路径',prop:'image',rules:{required:true,maxLength:150}},
+                      {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true,maxLength:150},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',},
                       {type:'Input',label:'描述',prop:'description',rules:{required:true,maxLength:255}},
                       {type:'Input',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
                       {type:'Input',label:'上架时间',prop:'deploytime',rules:{required:true}},
                       {type:'Input',label:'浏览次数',prop:'hits',rules:{required:true}},
-                      {type:'Input',label:'书籍的路径',prop:'url',rules:{required:true,maxLength:150}},
+                      {type:'Upload',label:'书籍的路径',prop:'urlList',rules:{required:true,maxLength:150},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',},
           ],
           //modal表单 end
           //modal 数据 start
           modalData : {//modal页面数据
+            
                       bookName:"",//书籍名称 
                       pinyin:"",//拼音 
                       cid:"",//书籍类别 
                       author:"",//作者 
                       image:"",//图片路径 
+                      imageList:[],
                       description:"",//描述 
                       state:"",//书籍状态（1 已上架 2 已下架 默认值1 ） 
                       deploytime:"",//上架时间 
                       hits:"",//浏览次数 
                       url:"",//书籍的路径 
+                      urlList:[],
           },
           //modal 数据 end
           //modal 按钮 start
