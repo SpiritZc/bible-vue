@@ -11,13 +11,14 @@ export default {
             getDetailApi:"/api/tBook//getDetail",//获取详情用api
             deleteOneApi:"/api/tBook/delete",//单条删除api
             deleteBatchApi:"/api/tBook/deletebatch",//批量删除api
+            getAllCategory:"/api/"
           },
           //请求的url end
           //查询表单内容 start
           searchForm:[
                       {type:'Input',label:'书籍名称',prop:'bookName'},
                       // {type:'Input',label:'拼音',prop:'pinyin'},
-                      {type:'Select',label:'书籍类别',prop:'cid',props:{label:'name',value:'id'},focus:this.getaAllCategory},
+                      {type:'Select',label:'书籍类别',prop:'cid'},
                       {type:'Input',label:'作者',prop:'author'},
                       // {type:'Input',label:'图片路径',prop:'image'},
                       // {type:'Input',label:'描述',prop:'description'},
@@ -97,22 +98,23 @@ export default {
           //modal表单 start
           modalForm:[
                       {type:'Input',label:'书籍名称',prop:'bookName',rules:{required:true,maxLength:100}},
-                      {type:'Input',label:'拼音',prop:'pinyin',rules:{required:true,maxLength:100}},
-                      {type:'Input',label:'书籍类别',prop:'cid',rules:{required:true}},
+                    //   {type:'Input',label:'拼音',prop:'pinyin',rules:{required:true,maxLength:100}},
+                      {type:'Select',label:'书籍类别',prop:'cid',rules:{required:true},props:{label:'name',value:'id'},focus:this.getAllCategory},
+                      {type:'Input',label:'出版社',prop:'publishing',rules:{required:true}},
                       {type:'Input',label:'作者',prop:'author',rules:{required:true,maxLength:100}},
-                      {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true,maxLength:150},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',},
-                      {type:'Input',label:'描述',prop:'description',rules:{required:true,maxLength:255}},
-                      {type:'Input',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
-                      {type:'Input',label:'上架时间',prop:'deploytime',rules:{required:true}},
-                      {type:'Input',label:'浏览次数',prop:'hits',rules:{required:true}},
-                      {type:'Upload',label:'书籍的路径',prop:'urlList',rules:{required:true,maxLength:150},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',},
+                      {type:'Input',label:'描述',prop:'description',rules:{maxLength:255}},
+                      {type:'Select',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
+                      {type:'Date',label:'上架时间',prop:'deploytime',rules:{required:true},change:(value)=>this.dateChange(value),},
+                    //   {type:'Input',label:'浏览次数',prop:'hits',rules:{required:true}},
+                    {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',},
+                      {type:'Upload',label:'书籍的路径',prop:'urlList',rules:{required:true},multiple:false,accept:".txt",width:'300px',labelWidth:'180px',tips:"请上传txt文件",},
           ],
           //modal表单 end
           //modal 数据 start
           modalData : {//modal页面数据
             
                       bookName:"",//书籍名称 
-                      pinyin:"",//拼音 
+                    //   pinyin:"",//拼音 
                       cid:"",//书籍类别 
                       author:"",//作者 
                       image:"",//图片路径 
@@ -123,6 +125,7 @@ export default {
                       hits:"",//浏览次数 
                       url:"",//书籍的路径 
                       urlList:[],
+                      publishing:"",//出版社
           },
           //modal 数据 end
           //modal 按钮 start
@@ -276,8 +279,12 @@ export default {
         this.pageData.selectList = rows;
       },
       //查询所有书的分类
-      getaAllCategory(){
+      getAllCategory(){
 
+      },
+      //日期组件改变
+      dateChange(value){
+        this.pageData.modalData.deploytime = value;
       }
     }
 

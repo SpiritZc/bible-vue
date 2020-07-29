@@ -126,8 +126,8 @@ selectUtil.hospitalType=[
  * @author: caiyang
  */
 selectUtil.bookState=[
-    {value:'1',label:"已上架"},
-    {value:'2',label:"已下架"},
+    {value:1,label:"已上架"},
+    {value:2,label:"已下架"},
 ]
 
 /**
