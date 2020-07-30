@@ -18,7 +18,7 @@ export default {
           searchForm:[
                       {type:'Input',label:'书籍名称',prop:'bookName'},
                       // {type:'Input',label:'拼音',prop:'pinyin'},
-                      {type:'Select',label:'书籍类别',prop:'cid'},
+                      {type:'Select',label:'书籍类别',prop:'cid',props:{label:'name',value:'id'},focus:this.getAllCategorySearch},
                       {type:'Input',label:'作者',prop:'author'},
                       // {type:'Input',label:'图片路径',prop:'image'},
                       // {type:'Input',label:'描述',prop:'description'},
@@ -70,11 +70,11 @@ export default {
           tableCols:[
                       {label:'书籍名称',prop:'bookName',align:'center'},
                       {label:'拼音',prop:'pinyin',align:'center'},
-                      {label:'书籍类别',prop:'cid',align:'center'},
+                      {label:'书籍类别',prop:'cid',align:'center',formatter:this.categoryFormatter},
                       {label:'作者',prop:'author',align:'center'},
                       // {label:'图片路径',prop:'image',align:'center'},
                       {label:'描述',prop:'description',align:'center'},
-                      {label:'书籍状态',prop:'state',align:'center'},
+                      {label:'书籍状态',prop:'state',align:'center',codeType:'bookState',formatter:this.commonUtil.getTableCodeName},
                       {label:'上架时间',prop:'deploytime',align:'center'},
                       {label:'浏览次数',prop:'hits',align:'center'},
                       // {label:'书籍的路径',prop:'url',align:'center'},
@@ -138,7 +138,7 @@ export default {
             {label:'提交',type:'primary',handle:()=>this.save()}
           ],
           //modal 按钮 end
-          uploadState:true,
+          categoryName:"",
         },
         //
       }
@@ -182,14 +182,17 @@ export default {
         {
           if(type == this.commonConstants.modalType.detail){
             this.pageData.modalForm[6].readonly = true;
+            this.pageData.modalForm[7].readonly = true;
           }
           if(type == this.commonConstants.modalType.update){
             this.pageData.modalForm[6].readonly = false;
+            this.pageData.modalForm[7].readonly = false;
           }
          
           this.getDetail(id);
         }else{
           this.pageData.modalForm[6].readonly = false;
+          this.pageData.modalForm[7].readonly = false;
         }
         
       },
@@ -210,12 +213,12 @@ export default {
           {
             this.pageData.modalData.imageList = [];
           }
-          this.pageData.modalData.imageList.push({url:response.responseData.image});
+          this.pageData.modalData.imageList.push({name:response.responseData.image.substring(response.responseData.image.lastIndexOf("/")+1),url:response.responseData.image});
           if(this.pageData.modalData.urlList == null)
           {
             this.pageData.modalData.urlList = [];
           }
-          this.pageData.modalData.urlList.push({url:response.responseData.url});
+          this.pageData.modalData.urlList.push({name:response.responseData.url.substring(response.responseData.url.lastIndexOf("/")+1),url:response.responseData.url});
         });
       },
       /**
@@ -240,6 +243,7 @@ export default {
           console.log(this.pageData.modalData.imageList[0])
           if (valid) {
               var params = {
+                id:this.pageData.modalData.id,
                 bookName:this.pageData.modalData.bookName,//书籍名称 
               //   pinyin:"",//拼音 
                 cid:this.pageData.modalData.cid,//书籍类别 
@@ -319,8 +323,8 @@ export default {
       selectChange(rows){
         this.pageData.selectList = rows;
       },
-      //查询所有书的分类
-      getAllCategory(){
+      //model查询所有书的分类
+      getAllCategory(){  
         var obj = {
           url:this.pageData.requestUrl.getAllCategory,
         }
@@ -332,6 +336,38 @@ export default {
           }
         });
           
+      },
+      //search查询所有书的分类
+      getAllCategorySearch(){
+        var obj = {
+            url:this.pageData.requestUrl.getAllCategory,
+          }
+          this.commonUtil.doGet(obj).then(response=>{
+            if (response.code == "200")
+            {
+              this.pageData.searchForm[1].options = response.responseData;
+              this.$refs['searchRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
+            }
+          });
+      },
+      //转义分类
+      categoryFormatter(row,column){
+        var obj = {
+            url:this.pageData.requestUrl.getAllCategory,
+          }
+          this.commonUtil.doGet(obj).then(response=>{
+                if (response.code == "200")
+                {
+                    const res = response.responseData;
+                        for (const key in res) {
+                            if(res[key].id === column.cid){
+                                this.pageData.categoryName = res[key].name;
+                        }
+                    }
+                }
+          });
+
+          return this.pageData.categoryName;
       },
       //日期组件改变
       dateChange(value){

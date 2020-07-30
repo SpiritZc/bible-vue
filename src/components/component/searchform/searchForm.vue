@@ -6,7 +6,7 @@
             <!-- 输入框 -->
             <el-input v-if="item.type==='Input'" v-model="searchData[item.prop]" :placeholder="'请输入'+item.label" size="item.size" @change="item.change && item.change(searchData[item.prop],item.params)" @input="item.input && item.input(searchData[item.prop])" :disabled="item.disabled"></el-input>
             <!-- 下拉框 -->
-            <el-select v-if="item.type==='Select'" v-model="searchData[item.prop]" size="item.size" @change="item.change && item.change(searchData[item.prop],item.params)" :disabled="item.disabled && item.disabled(modalData[item.prop])">
+            <el-select v-if="item.type==='Select'" v-model="searchData[item.prop]" size="item.size" @change="item.change && item.change(searchData[item.prop],item.params)" :disabled="item.disabled && item.disabled(searchData[item.prop])" @focus="item.focus && item.focus(searchData[item.prop],item.params)">
                  <el-option :label="'请选择'+item.label" value=""></el-option>
                <el-option v-for="op in item.options" :label="item.props?op[item.props.label]:op.label" :value="item.props?op[item.props.value]:op.value" :key="item.props?op[item.props.value]:op.value"></el-option>
             </el-select>

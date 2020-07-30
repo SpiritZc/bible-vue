@@ -116,6 +116,10 @@ commonConstants.dictionary={
     processStatus:{
         "1":"已处理",
         "2":"未处理",
+    },
+    bookState:{
+        "1":"已上架",
+        "2":"已下架"
     }
 }
 

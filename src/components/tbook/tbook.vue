@@ -9,7 +9,7 @@
 --> 
 <template>
     <div  class="_tablepage">
-        <searchForm  :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
+        <searchForm ref="searchRef" :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
         </searchForm>
        <cusTable  
       :isSelection='true'
