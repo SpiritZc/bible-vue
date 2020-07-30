@@ -171,6 +171,7 @@ export default {
         url:this.pageData.requestUrl.getDetailApi,
         params:{id:id},
       }
+    
       this.commonUtil.doGet(obj).then(response=>{
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
         // var orgNames="";

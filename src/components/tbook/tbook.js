@@ -11,7 +11,7 @@ export default {
             getDetailApi:"/api/tBook//getDetail",//获取详情用api
             deleteOneApi:"/api/tBook/delete",//单条删除api
             deleteBatchApi:"/api/tBook/deletebatch",//批量删除api
-            getAllCategory:"/api/"
+            getAllCategory:"/api/tCategory/getAllCategory",//查询类别列表
           },
           //请求的url end
           //查询表单内容 start
@@ -103,30 +103,34 @@ export default {
                       {type:'Input',label:'出版社',prop:'publishing',rules:{required:true}},
                       {type:'Input',label:'作者',prop:'author',rules:{required:true,maxLength:100}},
                       {type:'Input',label:'描述',prop:'description',rules:{maxLength:255}},
-                      {type:'Select',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
-                      {type:'Date',label:'上架时间',prop:'deploytime',rules:{required:true},change:(value)=>this.dateChange(value),},
+                      // {type:'Select',label:'书籍状态',prop:'state',rules:{required:true},options:this.selectUtil.bookState},
+                      {type:'Date',label:'上架时间',prop:'deploytime',rules:{required:true},change:(value)=>this.dateChange(value)},
                     //   {type:'Input',label:'浏览次数',prop:'hits',rules:{required:true}},
-                    {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',},
-                      {type:'Upload',label:'书籍的路径',prop:'urlList',rules:{required:true},multiple:false,accept:".txt",width:'300px',labelWidth:'180px',tips:"请上传txt文件",},
+                      {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',readonly:true},
+                      {type:'Upload',label:'书籍的路径',prop:'urlList',rules:{required:true},multiple:false,accept:".txt",width:'300px',labelWidth:'180px',tips:"请上传txt文件",readonly:true},
           ],
           //modal表单 end
           //modal 数据 start
           modalData : {//modal页面数据
-            
-                      bookName:"",//书籍名称 
-                    //   pinyin:"",//拼音 
-                      cid:"",//书籍类别 
-                      author:"",//作者 
-                      image:"",//图片路径 
-                      imageList:[],
-                      description:"",//描述 
-                      state:"",//书籍状态（1 已上架 2 已下架 默认值1 ） 
-                      deploytime:"",//上架时间 
-                      hits:"",//浏览次数 
-                      url:"",//书籍的路径 
-                      urlList:[],
-                      publishing:"",//出版社
+                bookName:"",//书籍名称 
+              //   pinyin:"",//拼音 
+                cid:"",//书籍类别 
+                author:"",//作者 
+                image:"",//图片路径 
+                imageList:[],
+                description:"",//描述 
+                state:"",//书籍状态（1 已上架 2 已下架 默认值1 ） 
+                deploytime:"",//上架时间 
+                hits:"",//浏览次数 
+                url:"",//书籍的路径 
+                urlList:[],
+                publishing:"",//出版社
           },
+          //书籍类型数据start
+          categoryData : {
+            name:""//类别名
+          },
+           //书籍类型数据end
           //modal 数据 end
           //modal 按钮 start
           modalHandles:[
@@ -134,11 +138,16 @@ export default {
             {label:'提交',type:'primary',handle:()=>this.save()}
           ],
           //modal 按钮 end
-        }
+          uploadState:true,
+        },
+        //
       }
     },
     mounted(){
       this.searchtablelist();
+    },
+    computed:{
+      
     },
     methods:{
       /**
@@ -171,7 +180,16 @@ export default {
         this.commonUtil.showModal(this.pageData.modalConfig,type);
         if(type != this.commonConstants.modalType.insert)
         {
+          if(type == this.commonConstants.modalType.detail){
+            this.pageData.modalForm[6].readonly = true;
+          }
+          if(type == this.commonConstants.modalType.update){
+            this.pageData.modalForm[6].readonly = false;
+          }
+         
           this.getDetail(id);
+        }else{
+          this.pageData.modalForm[6].readonly = false;
         }
         
       },
@@ -188,6 +206,16 @@ export default {
         }
         this.commonUtil.doGet(obj).then(response=>{
           this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
+          if(this.pageData.modalData.imageList == null)
+          {
+            this.pageData.modalData.imageList = [];
+          }
+          this.pageData.modalData.imageList.push({url:response.responseData.image});
+          if(this.pageData.modalData.urlList == null)
+          {
+            this.pageData.modalData.urlList = [];
+          }
+          this.pageData.modalData.urlList.push({url:response.responseData.url});
         });
       },
       /**
@@ -209,9 +237,22 @@ export default {
        */    
       save(){
         this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
+          console.log(this.pageData.modalData.imageList[0])
           if (valid) {
+              var params = {
+                bookName:this.pageData.modalData.bookName,//书籍名称 
+              //   pinyin:"",//拼音 
+                cid:this.pageData.modalData.cid,//书籍类别 
+                author:this.pageData.modalData.author,//作者 
+                image:this.pageData.modalData.imageList[0].url,//图片路径 
+                description:this.pageData.modalData.description,//描述 
+                state:this.pageData.modalData.state,//书籍状态（1 已上架 2 已下架 默认值1 ） 
+                deploytime:this.pageData.modalData.deploytime,//上架时间 
+                url:this.pageData.modalData.urlList[0].url,//书籍的路径 
+                publishing:this.pageData.modalData.publishing,//出版社
+              }
               var obj = {
-                params:this.pageData.modalData,
+                params:params,
                 removeEmpty:false,
               }
               if(this.pageData.modalConfig.type == this.commonConstants.modalType.insert)
@@ -280,11 +321,21 @@ export default {
       },
       //查询所有书的分类
       getAllCategory(){
-
+        var obj = {
+          url:this.pageData.requestUrl.getAllCategory,
+        }
+        this.commonUtil.doGet(obj).then(response=>{
+          if (response.code == "200")
+          {
+            this.pageData.modalForm[1].options = response.responseData;
+            this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
+          }
+        });
+          
       },
       //日期组件改变
       dateChange(value){
-        this.pageData.modalData.deploytime = value;
+        console.log(value)
       }
     }
 

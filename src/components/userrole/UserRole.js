@@ -169,8 +169,10 @@ export default {
         url:this.pageData.requestUrl.getDetailApi,
         params:{id:id},
       }
+      console.log(this.pageData.modalData)
       this.commonUtil.doGet(obj).then(response=>{
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
+        console.log(this.pageData.modalData)
         // this.$refs.modalRef.$refs.select[0].labelModel = response.responseData.orgName;
       });
     },
@@ -195,6 +197,7 @@ export default {
      */    
     save(){
       this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
+        console.log(this.pageData.modalData)
         if (valid) {
             var obj = {
               params:this.pageData.modalData,
@@ -205,10 +208,6 @@ export default {
               obj.url = this.pageData.requestUrl.insertApi;
             }else{
               obj.url = this.pageData.requestUrl.updateApi
-            }
-            if(sessionStorage.getItem(this.commonConstants.sessionItem.isAdmin)!=1&&sessionStorage.getItem(this.commonConstants.sessionItem.orgIds).length==1)
-            {
-              this.pageData.modalData.orgId = sessionStorage.getItem(this.commonConstants.sessionItem.orgIds)[0];
             }
             this.commonUtil.doPost(obj) .then(response=>{
               if (response.code == "200")

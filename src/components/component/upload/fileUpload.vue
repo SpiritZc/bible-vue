@@ -141,6 +141,10 @@ export default{
             readonly:{
                 type:Boolean,
                 default:false
+            },
+            disabled:{
+                type:Boolean,
+                default:false 
             }
         },
     data() {
