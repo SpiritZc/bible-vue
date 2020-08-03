@@ -16,15 +16,15 @@ export default {
         //查询表单内容 start
         searchForm:[
 					{type:'Input',label:'文件名',prop:'fileName'},
-					{type:'Input',label:'文件大小',prop:'fileSize'},
-					{type:'Input',label:'文件操作类型 1上传2下载3删除4查看',prop:'type'},
-					{type:'Input',label:'上传状态 1上传成功 2上传失败3删除成功4删除失败',prop:'operateStatus'},
-					{type:'Input',label:'异常信息',prop:'errorInfo'},
-					{type:'Input',label:'返回结果',prop:'result'},
-					{type:'Input',label:'访问路径',prop:'fileUrl'},
-					{type:'Input',label:'请求机器ip',prop:'operateIp'},
-					{type:'Input',label:'执行时长',prop:'executeTime'},
-					{type:'Input',label:'请求来源 1 后台运营 2其他 默认1',prop:'requestSource'},
+					// {type:'Input',label:'文件大小',prop:'fileSize'},
+          {type:'Select',label:'文件操作类型',prop:'type',options:this.selectUtil.fileType},
+					{type:'Select',label:'上传状态',prop:'operateStatus',options:this.selectUtil.fileOperateStatus},
+					// {type:'Input',label:'异常信息',prop:'errorInfo'},
+					// {type:'Input',label:'返回结果',prop:'result'},
+					// {type:'Input',label:'访问路径',prop:'fileUrl'},
+					// {type:'Input',label:'请求机器ip',prop:'operateIp'},
+					// {type:'Input',label:'执行时长',prop:'executeTime'},
+					{type:'Select',label:'请求来源',prop:'menuType',options:this.selectUtil.menuType},
         ],
         //查询表单内容 end
         //查询条件 start
@@ -68,20 +68,21 @@ export default {
         //表格列表头start
         tableCols:[
 					{label:'文件名',prop:'fileName',align:'center'},
-					{label:'文件大小',prop:'fileSize',align:'center'},
-					{label:'文件操作类型 1上传2下载3删除4查看',prop:'type',align:'center'},
-					{label:'上传状态 1上传成功 2上传失败3删除成功4删除失败',prop:'operateStatus',align:'center'},
-					{label:'异常信息',prop:'errorInfo',align:'center'},
-					{label:'返回结果',prop:'result',align:'center'},
+					// {label:'文件大小',prop:'fileSize',align:'center'},
+					{label:'文件操作类型',prop:'type',align:'center',codeType:'fileType',formatter:this.commonUtil.getTableCodeName},
+					{label:'上传状态',prop:'operateStatus',align:'center',codeType:'fileOperateStatus',formatter:this.commonUtil.getTableCodeName},
+					// {label:'异常信息',prop:'errorInfo',align:'center'},
+					// {label:'返回结果',prop:'result',align:'center'},
 					{label:'访问路径',prop:'fileUrl',align:'center'},
 					{label:'请求机器ip',prop:'operateIp',align:'center'},
-					{label:'执行时长',prop:'executeTime',align:'center'},
-					{label:'请求来源 1 后台运营 2其他 默认1',prop:'requestSource',align:'center'},
-					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
-						{label:'查看',type:'text',auth:'fileLog_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
-						{label:'编辑',type:'text',auth:'fileLog_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
-						{label:'删除',type:'text',auth:'fileLog_delete',handle:(row)=>this.deleteOne(row.id)},
-					]}
+          // {label:'执行时长',prop:'executeTime',align:'center'},
+          
+					{label:'请求来源',prop:'requestSource',align:'center',codeType:'menuType',formatter:this.commonUtil.getTableCodeName},
+					// {label:'操作',prop:'operation',align:'center',type:'button',btnList:[
+					// 	{label:'查看',type:'text',auth:'fileLog_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
+					// 	{label:'编辑',type:'text',auth:'fileLog_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
+					// 	{label:'删除',type:'text',auth:'fileLog_delete',handle:(row)=>this.deleteOne(row.id)},
+					// ]}
         ],
         //表格列表头end
         //modal配置 start

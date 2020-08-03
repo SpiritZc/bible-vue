@@ -131,6 +131,32 @@ selectUtil.bookState=[
 ]
 
 /**
+ * @description: 文件操作类型
+ * @param {type} 
+ * @return: 
+ * @author: caiyang
+ */
+selectUtil.fileType=[
+    {value:1,label:"上传"},
+    {value:2,label:"下载"},
+    {value:3,label:"删除"},
+    {value:4,label:"查看"},
+]
+
+/**
+ * @description: 文件上传状态
+ * @param {type} 
+ * @return: 
+ * @author: caiyang
+ */
+selectUtil.fileOperateStatus=[
+    {value:1,label:"上传成功"},
+    {value:2,label:"上传失败"},
+    {value:3,label:"删除成功"},
+    {value:4,label:"删除失败"},
+]
+
+/**
  * @description: 菜单类型
  * @param {type} 
  * @return: 

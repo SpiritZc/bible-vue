@@ -103,7 +103,14 @@ const router = new Router({
             title: '书籍信息',
           }
         },
-        
+        {
+          path: '/fileLog',
+          name: 'fileLog',
+          component: () => import('@/components/fileLog/FileLog.vue'),
+          meta: {
+            title: '书籍信息',
+          }
+        },
       ]
     },
     {
