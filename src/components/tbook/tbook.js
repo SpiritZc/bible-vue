@@ -12,7 +12,6 @@ export default {
             deleteOneApi:"/api/tBook/delete",//单条删除api
             deleteBatchApi:"/api/tBook/deletebatch",//批量删除api
             getAllCategory:"/api/tCategory/getAllCategory",//查询类别列表
-            updateStatueApi:"/api/tBook/updateStatue",//修改书籍状态
           },
           //请求的url end
           //查询表单内容 start
@@ -23,8 +22,8 @@ export default {
                       {type:'Input',label:'作者',prop:'author'},
                       // {type:'Input',label:'图片路径',prop:'image'},
                       // {type:'Input',label:'描述',prop:'description'},
-                      {type:'Select',label:'书籍状态',prop:'state',options:this.selectUtil.bookState},
-                      {type:'DateRange',label:'上架时间',prop:'queryDate'},
+                      {type:'Input',label:'书籍状态',prop:'state'},
+                      {type:'Input',label:'上架时间',prop:'deploytime'},
                       // {type:'Input',label:'浏览次数',prop:'hits'},
                       // {type:'Input',label:'书籍的路径',prop:'url'},
           ],
@@ -41,9 +40,6 @@ export default {
                       deploytime:"",//上架时间 
                       hits:"",//浏览次数 
                       url:"",//书籍的路径 
-                      queryDate:[],//查询时间集合
-                      startDate:"",//查询开始时间
-                      endDate:"",//查询结束时间
           },
           //查询条件 end
           //查询表单按钮start
@@ -75,17 +71,17 @@ export default {
                       {label:'书籍名称',prop:'bookName',align:'center'},
                       {label:'拼音',prop:'pinyin',align:'center'},
                       {label:'书籍类别',prop:'cid',align:'center',formatter:this.categoryFormatter},
+                    //  {label:'书籍类别',prop:'cid',align:'center',formatter:this.categoryFormatter},
                       {label:'作者',prop:'author',align:'center'},
                       // {label:'图片路径',prop:'image',align:'center'},
                       {label:'描述',prop:'description',align:'center'},
-                      {label:'书籍状态',prop:'state',align:'center',codeType:'bookState',formatter:this.commonUtil.getTableCodeName},
+                      {label:'书籍状态',prop:'state',align:'center',codeType:'state',formatter:this.commonUtil.getTableCodeName},
                       {label:'上架时间',prop:'deploytime',align:'center'},
                       {label:'浏览次数',prop:'hits',align:'center'},
                       // {label:'书籍的路径',prop:'url',align:'center'},
                       {label:'操作',prop:'operation',align:'center',type:'button',btnList:[
                           {label:'查看',type:'text',auth:'tBook_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
                           {label:'编辑',type:'text',auth:'tBook_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
-                          {label:(row)=>this.label(row),type:'text',auth:'tBook_status',handle:(row)=>this.updateStatus(row)},
                           {label:'删除',type:'text',auth:'tBook_delete',handle:(row)=>this.deleteOne(row.id)},
                       ]}
           ],
@@ -162,8 +158,6 @@ export default {
        * @author: caiyang
        */    
       searchtablelist(){
-        this.pageData.queryData.startDate =  this.pageData.queryData.queryDate[0]
-        this.pageData.queryData.endDate =  this.pageData.queryData.queryDate[1]
         var obj = {
           url:this.pageData.requestUrl.listApi,
           params:Object.assign({}, this.pageData.queryData, this.pageData.tablePage),
@@ -359,50 +353,27 @@ export default {
       },
       //转义分类
       categoryFormatter(row,column){
-        var obj = {
-            url:this.pageData.requestUrl.getAllCategory,
-          }
-          this.commonUtil.doGet(obj).then(response=>{
-                if (response.code == "200")
-                {
-                    const res = response.responseData;
-                        for (const key in res) {
-                            if(res[key].id === column.cid){
-                                this.pageData.categoryName = res[key].name;
-                        }
-                    }
-                }
-          });
+        // var obj = {
+        //     url:this.pageData.requestUrl.getAllCategory,
+        //   }
+        //   this.commonUtil.doGet(obj).then(response=>{
+        //         if (response.code == "200")
+        //         {
+        //             const res = response.responseData;
+        //                 for (const key in res) {
+        //                     if(res[key].id === column.cid){
+        //                         this.pageData.categoryName = res[key].name;
+        //                 }
+        //             }
+        //         }
+        //   });
 
-          return this.pageData.categoryName;
+        //   return this.pageData.categoryName;
       },
       //日期组件改变
       dateChange(value){
         console.log(value)
-      },
-      //修改书籍状态
-      updateStatus(row){
-        var obj = {
-          params:{id:row.id,state:row.state==1?2:1},
-          url:this.pageData.requestUrl.updateStatueApi
-        }
-        this.commonUtil.doPost(obj) .then(response=>{
-          if (response.code == "200")
-          {
-            this.searchtablelist();
-          }
-        });
-      },
-      //上架下架显示
-      label(row){
-        console.log(row)
-        if(row.state == 1)
-        {
-          return "下架";
-        }else{
-          return "上架";
-        }
-    },
+      }
     }
 
   };

@@ -108,7 +108,7 @@ const router = new Router({
           name: 'fileLog',
           component: () => import('@/components/fileLog/FileLog.vue'),
           meta: {
-            title: '书籍信息',
+            title: '文件日志',
           }
         },
       ]
