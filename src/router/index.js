@@ -104,6 +104,22 @@ const router = new Router({
           }
         },
         {
+          path: '/tweetTopic',
+          name: 'tweetTopic',
+          component: () => import('@/components/tweettopic/TweetTopic.vue'),
+          meta: {
+            title: '推文专题',
+          }
+        },
+        {
+          path: '/tweetDetails',
+          name: 'tweetDetails',
+          component: () => import('@/components/tweetdetails/TweetDetails.vue'),
+          meta: {
+            title: '推文列表',
+          }
+        },
+        {
           path: '/fileLog',
           name: 'fileLog',
           component: () => import('@/components/fileLog/FileLog.vue'),
