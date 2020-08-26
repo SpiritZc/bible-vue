@@ -1,39 +1,36 @@
 export default {
-  name:'tweetDetails',
+  name:'soundDetail',
   data() {
     return{
       pageData:{
         //请求的url start
         requestUrl:{
-          listApi:"/api/tweetDetails/getTableList",//获取表格数据api
-          insertApi:"/api/tweetDetails/insert",//新增用api
-          updateApi:"/api/tweetDetails/update",//更新用api
-          getDetailApi:"/api/tweetDetails/getDetail",//获取详情用api
-          deleteOneApi:"/api/tweetDetails/delete",//单条删除api
-          deleteBatchApi:"/api/tweetDetails/deletebatch",//批量删除api
+          listApi:"/api/soundDetail/getTableList",//获取表格数据api
+          insertApi:"/api/soundDetail/insert",//新增用api
+          updateApi:"/api/soundDetail/update",//更新用api
+          getDetailApi:"/api/soundDetail//getDetail",//获取详情用api
+          deleteOneApi:"/api/soundDetail/delete",//单条删除api
+          deleteBatchApi:"/api/soundDetail/deletebatch",//批量删除api
         },
         //请求的url end
         //查询表单内容 start
         searchForm:[
-					{type:'Input',label:'标题',prop:'title'},
-					{type:'Input',label:'文章来源作者',prop:'fromAuthor'},
-					{type:'Input',label:'推文内容',prop:'content'},
-          
+					{type:'Input',label:'音频文件名',prop:'soundName'},
+					{type:'Input',label:'音频路径',prop:'soundUrl'},
+					{type:'Input',label:'音频作者',prop:'soundAuthor'},
         ],
         //查询表单内容 end
         //查询条件 start
         queryData:{
-          topicId:"",//专题id
-          title:"",//标题 
-					fromAuthor:"",//文章来源作者 
-					content:"",//推文内容 
-          img:"",//推文图片路径 
+					soundName:"",//音频文件名 
+					soundUrl:"",//音频路径 
+					soundAuthor:"",//音频作者 
         },
         //查询条件 end
         //查询表单按钮start
         searchHandle:[
-          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'tweetDetails_search'},
-          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'tweetDetails_search'}
+          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'soundDetail_search'},
+          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'soundDetail_search'}
         ],
         //查询表单按钮end
         //表格数据start
@@ -41,8 +38,8 @@ export default {
         //表格数据end
         //表格工具栏按钮 start
         tableHandles:[
-          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'tweetDetails_insert'},
-          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'tweetDetails_batchdelete'}
+          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'soundDetail_insert'},
+          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'soundDetail_batchdelete'}
         ],
         //表格工具栏按钮 end
         selectList:[],//表格选中的数据
@@ -56,14 +53,13 @@ export default {
         //表格分页信息end
         //表格列表头start
         tableCols:[
-					{label:'标题',prop:'title',align:'center'},
-					{label:'文章来源作者',prop:'fromAuthor',align:'center'},
-					{label:'推文内容',prop:'content',align:'center'},
-					{label:'推文图片路径',prop:'img',align:'center'},
+					{label:'音频文件名',prop:'soundName',align:'center'},
+					{label:'音频路径',prop:'soundUrl',align:'center'},
+					{label:'音频作者',prop:'soundAuthor',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
-						{label:'查看',type:'text',auth:'tweetDetails_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
-						{label:'编辑',type:'text',auth:'tweetDetails_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
-						{label:'删除',type:'text',auth:'tweetDetails_delete',handle:(row)=>this.deleteOne(row.id)},
+						{label:'查看',type:'text',auth:'soundDetail_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
+						{label:'编辑',type:'text',auth:'soundDetail_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
+						{label:'删除',type:'text',auth:'soundDetail_delete',handle:(row)=>this.deleteOne(row.id)},
 					]}
         ],
         //表格列表头end
@@ -74,26 +70,21 @@ export default {
           formEditDisabled:false,//编辑弹窗是否可编辑
           width:'700px',//弹出框宽度
           modalRef:"modalRef",//modal标识
-          type:"1",//类型 1新增 2编辑 3保存
-          topicId:"",
+          type:"1"//类型 1新增 2编辑 3保存
         },
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'标题',prop:'title',rules:{required:true,maxLength:200}},
-					{type:'Input',label:'文章来源作者',prop:'fromAuthor',rules:{required:true,maxLength:100},height:'300px'},
-					{type:'Textarea',label:'推文内容',prop:'content',rules:{required:true,maxLength:65535}},
-          {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'200px',labelWidth:'100px',readonly:true},
+					{type:'Input',label:'音频文件名',prop:'soundName',rules:{required:true,maxLength:100}},
+					{type:'Input',label:'音频路径',prop:'soundUrl',rules:{required:true,maxLength:255}},
+					{type:'Input',label:'音频作者',prop:'soundAuthor',rules:{required:true,maxLength:100}},
         ],
         //modal表单 end
         //modal 数据 start
         modalData : {//modal页面数据
-          topicId:"",//专题id
-          title:"",//标题 
-					fromAuthor:"",//文章来源作者 
-					content:"",//推文内容 
-          img:"",//推文图片路径 
-          imageList:[],//推文图片集合
+					soundName:"",//音频文件名 
+					soundUrl:"",//音频路径 
+					soundAuthor:"",//音频作者 
         },
         //modal 数据 end
         //modal 按钮 start
@@ -106,8 +97,6 @@ export default {
     }
   },
   mounted(){
-    let topicId=this.$store.getters.parameters['topicId'];//获取topicId
-    this.pageData.modalData.topicId = topicId;
     this.searchtablelist();
   },
   methods:{
@@ -139,19 +128,11 @@ export default {
      */    
     showModal(type,id){
       this.commonUtil.showModal(this.pageData.modalConfig,type);
-        if(type != this.commonConstants.modalType.insert)
-        {
-          if(type == this.commonConstants.modalType.detail){
-            this.pageData.modalForm[3].readonly = true;
-          }
-          if(type == this.commonConstants.modalType.update){
-            this.pageData.modalForm[3].readonly = false;
-          }
-         
-          this.getDetail(id);
-        }else{
-          this.pageData.modalForm[3].readonly = false;
-        }
+      if(type != this.commonConstants.modalType.insert)
+      {
+        this.getDetail(id);
+      }
+      
     },
     /**
      * @description: 获取详细数据
@@ -166,11 +147,6 @@ export default {
       }
       this.commonUtil.doGet(obj).then(response=>{
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
-        if(this.pageData.modalData.imageList == null)
-          {
-            this.pageData.modalData.imageList = [];
-          }
-          this.pageData.modalData.imageList.push({name:response.responseData.img.substring(response.responseData.img.lastIndexOf("/")+1),url:response.responseData.img});
       });
     },
     /**
@@ -193,18 +169,8 @@ export default {
     save(){
       this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
         if (valid) {
-            var params = {
-              id:this.pageData.modalData.id,
-              topicId:this.pageData.modalData.topicId,//专题id
-              title:this.pageData.modalData.title,//标题 
-              fromAuthor:this.pageData.modalData.fromAuthor,//文章来源作者 
-              description:this.pageData.modalData.description,//推文内容 
-              content:this.pageData.modalData.content,//推文图片路径
-              deploytime:this.pageData.modalData.deploytime,//上架时间 
-              img:this.pageData.modalData.imageList[0].url,//推文图片路径 
-            }
             var obj = {
-              params:params,
+              params:this.pageData.modalData,
               removeEmpty:false,
             }
             if(this.pageData.modalConfig.type == this.commonConstants.modalType.insert)

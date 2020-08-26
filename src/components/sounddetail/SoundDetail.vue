@@ -1,6 +1,6 @@
 <template>
     <div  class="_tablepage">
-        <searchForm ref="searchRef" :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
+        <searchForm  :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
         </searchForm>
        <cusTable  
       :isSelection='true'
@@ -11,12 +11,12 @@
       :tableHandles='pageData.tableHandles'
       :tableData='pageData.tableData'
       :tablePage='pageData.tablePage'
-      @handleCurrentChange='searchtablelist'
+      @handleCurrentChange='searchtablelist()'
       @selectChange='selectChange'></cusTable>
        <modal ref="modalRef" :modalConfig='pageData.modalConfig' 
        :modalForm='pageData.modalForm' :modalData='pageData.modalData' 
        :modalHandles='pageData.modalHandles'
-       @closeModal="closeModal"></modal>
+       @closeModal="closeModal()"></modal>
     </div>
 </template>
-<script src="./TweetDetails.js"></script>
+<script src="./soundDetail.js"></script>

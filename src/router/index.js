@@ -127,6 +127,22 @@ const router = new Router({
             title: '文件日志',
           }
         },
+        {
+          path: '/soundCategory',
+          name: 'soundCategory',
+          component: () => import('@/components/soundcategory/SoundCategory.vue'),
+          meta: {
+            title: '音频模块',
+          }
+        },
+        {
+          path: '/soundDetail',
+          name: 'soundDetail',
+          component: () => import('@/components/sounddetail/SoundDetail.vue'),
+          meta: {
+            title: '音频模块详情',
+          }
+        },
       ]
     },
     {
