@@ -46,7 +46,7 @@ export default{
             window.open(file.url);   
         },
         beforeUpload(file){
-            if(this.accept == ""||this.accept=="*"||this.accept=="*.*"||this.accept=="image/*")
+            if(this.accept == ""||this.accept=="*"||this.accept=="*.*"||this.accept=="image/*"||this.accept=="audio/*")
             {
                 return true;
             }else{

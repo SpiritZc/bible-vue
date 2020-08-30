@@ -8,9 +8,11 @@ export default {
           listApi:"/api/soundDetail/getTableList",//获取表格数据api
           insertApi:"/api/soundDetail/insert",//新增用api
           updateApi:"/api/soundDetail/update",//更新用api
-          getDetailApi:"/api/soundDetail//getDetail",//获取详情用api
+          getDetailApi:"/api/soundDetail/getDetail",//获取详情用api
           deleteOneApi:"/api/soundDetail/delete",//单条删除api
           deleteBatchApi:"/api/soundDetail/deletebatch",//批量删除api
+          roleListApi:"/api/sysRole/getRoles",//获取所有的角色列表
+          userListByRoleId:"/api/sysUser/getUserByRoleId",//根据角色获取用户
         },
         //请求的url end
         //查询表单内容 start
@@ -24,7 +26,8 @@ export default {
         queryData:{
 					soundName:"",//音频文件名 
 					soundUrl:"",//音频路径 
-					soundAuthor:"",//音频作者 
+          soundAuthor:"",//音频作者 
+          categoryId:"",//
         },
         //查询条件 end
         //查询表单按钮start
@@ -75,16 +78,25 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'音频文件名',prop:'soundName',rules:{required:true,maxLength:100}},
-					{type:'Input',label:'音频路径',prop:'soundUrl',rules:{required:true,maxLength:255}},
+          {type:'Select',label:'关联用户',prop:'isAssociateUser',rules:{required:true},options:this.selectUtil.yesNo,},
+          {type:'Select',label:'角色id',prop:'roleId',rules:{required:true},props:{label:'roleName',value:'id'},focus:this.getAllRoles},
+          {type:'Select',label:'用户id',prop:'userId',rules:{required:true},props:{label:'accountName',value:'id'},focus:this.getUserByRole},
+          {type:'Input',label:'音频文件名',prop:'soundName',rules:{required:true,maxLength:100}},
+          // {type:'Input',label:'音频路径',prop:'',rules:{required:true,maxLength:255}},
+          {type:'Upload',label:'音频路径',prop:'soundUrlList',rules:{required:true},multiple:false,accept:"audio/*",width:'200px',labelWidth:'100px',readonly:true},
 					{type:'Input',label:'音频作者',prop:'soundAuthor',rules:{required:true,maxLength:100}},
         ],
         //modal表单 end
         //modal 数据 start
         modalData : {//modal页面数据
+          categoryId:"",//有声类别id
+          isAssociateUser:"",//是否关联用户 1关联 2不关联
 					soundName:"",//音频文件名 
 					soundUrl:"",//音频路径 
-					soundAuthor:"",//音频作者 
+          soundAuthor:"",//音频作者 
+          roleId:"",//角色id
+          userId:"",//用户id
+          soundUrlList:[],//音频文件
         },
         //modal 数据 end
         //modal 按钮 start
@@ -97,6 +109,9 @@ export default {
     }
   },
   mounted(){
+    
+    let categoryId=this.$store.getters.parameters['categoryId'];//获取topicId
+    this.pageData.queryData.categoryId = categoryId;
     this.searchtablelist();
   },
   methods:{
@@ -130,7 +145,16 @@ export default {
       this.commonUtil.showModal(this.pageData.modalConfig,type);
       if(type != this.commonConstants.modalType.insert)
       {
+        if(type == this.commonConstants.modalType.detail){
+          this.pageData.modalForm[4].readonly = true;
+        }
+        if(type == this.commonConstants.modalType.update){
+          this.pageData.modalForm[4].readonly = false;
+        }
+       
         this.getDetail(id);
+      }else{
+        this.pageData.modalForm[4].readonly = false;
       }
       
     },
@@ -169,8 +193,18 @@ export default {
     save(){
       this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
         if (valid) {
+          var params = {
+            id:this.pageData.modalData.id,
+            categoryId:this.pageData.queryData.categoryId,//有声类别id
+            isAssociateUser:this.pageData.modalData.isAssociateUser,//是否关联用户 1关联 2不关联
+            soundUrl:this.pageData.modalData.soundUrlList[0].url,//音频文件名 
+            soundName:this.pageData.modalData.soundName,//音频路径 
+            soundAuthor:this.pageData.modalData.soundAuthor,//推文图片路径
+            roleId:this.pageData.modalData.roleId,// 
+            userId:this.pageData.modalData.userId,//
+          }
             var obj = {
-              params:this.pageData.modalData,
+              params:params,
               removeEmpty:false,
             }
             if(this.pageData.modalConfig.type == this.commonConstants.modalType.insert)
@@ -237,5 +271,36 @@ export default {
     selectChange(rows){
       this.pageData.selectList = rows;
     },
+    /**
+     * 获取所有的角色
+     */
+    getAllRoles(){
+      // if(){
+
+      // }
+      var obj = {
+        url:this.pageData.requestUrl.roleListApi,
+      }
+      this.commonUtil.doGet(obj).then(response=>{
+        if (response.code == "200")
+        {
+          this.pageData.modalForm[1].options = response.responseData;
+          this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
+        }
+      });
+    },
+    getUserByRole(){
+      var obj = {
+        url:this.pageData.requestUrl.userListByRoleId,
+        params:{roleId:this.pageData.modalData.roleId},
+      }
+      this.commonUtil.doGet(obj).then(response=>{
+        if (response.code == "200")
+        {
+          this.pageData.modalForm[2].options = response.responseData;
+          this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
+        }
+      });
+    }
   }
 };

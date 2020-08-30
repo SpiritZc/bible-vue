@@ -107,7 +107,8 @@ export default {
   },
   mounted(){
     let topicId=this.$store.getters.parameters['topicId'];//获取topicId
-    this.pageData.modalData.topicId = topicId;
+    // this.pageData.modalData.topicId = topicId;
+    this.pageData.queryData.topicId = topicId;
     this.searchtablelist();
   },
   methods:{
@@ -195,7 +196,7 @@ export default {
         if (valid) {
             var params = {
               id:this.pageData.modalData.id,
-              topicId:this.pageData.modalData.topicId,//专题id
+              topicId:this.pageData.queryData.topicId,//专题id
               title:this.pageData.modalData.title,//标题 
               fromAuthor:this.pageData.modalData.fromAuthor,//文章来源作者 
               description:this.pageData.modalData.description,//推文内容 

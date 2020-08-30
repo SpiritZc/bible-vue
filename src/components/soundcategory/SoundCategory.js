@@ -8,7 +8,7 @@ export default {
           listApi:"/api/soundCategory/getTableList",//获取表格数据api
           insertApi:"/api/soundCategory/insert",//新增用api
           updateApi:"/api/soundCategory/update",//更新用api
-          getDetailApi:"/api/soundCategory//getDetail",//获取详情用api
+          getDetailApi:"/api/soundCategory/getDetail",//获取详情用api
           deleteOneApi:"/api/soundCategory/delete",//单条删除api
           deleteBatchApi:"/api/soundCategory/deletebatch",//批量删除api
         },
@@ -52,7 +52,8 @@ export default {
 					{label:'类别名',prop:'categoryName',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'soundCategory_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
-						{label:'编辑',type:'text',auth:'soundCategory_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
+            {label:'编辑',type:'text',auth:'soundCategory_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
+            {label:'分类详情',type:'text',auth:'soundCategory_datails',handle:(row)=>this.routerTo(row)},
 						{label:'删除',type:'text',auth:'soundCategory_delete',handle:(row)=>this.deleteOne(row.id)},
 					]}
         ],
@@ -69,7 +70,7 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'类别名',prop:'categoryName',rules:{required:true,type:'number'}},
+					{type:'Input',label:'类别名',prop:'categoryName',rules:{required:true}},
         ],
         //modal表单 end
         //modal 数据 start
@@ -226,6 +227,15 @@ export default {
     },
     selectChange(rows){
       this.pageData.selectList = rows;
+    },
+    /**
+     * 跳转音频详情
+     * @param {*} row 
+     */
+    routerTo(row){
+      this.$store.commit("setParameters",{key:'categoryId',value:row.id});
+      // this.$store.commit("setParameters",{key:'menuType',value:row.menuType});
+      this.$router.push({ name: 'soundDetail'})
     },
   }
 };
