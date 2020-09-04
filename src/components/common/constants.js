@@ -100,7 +100,7 @@ commonConstants.dictionary={
     },
     menuType:{
         "1":"运营后台菜单",
-        "2":"医生PC端菜单",
+        "2":"小程序菜单",
     },
     authStatus:{
         "1":"未认证",
