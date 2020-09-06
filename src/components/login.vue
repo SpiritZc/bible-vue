@@ -102,6 +102,7 @@ export default {
           var param = {
             accountName: this.formLogin.loginName,
             password: this.formLogin.password,
+            loginType:1
           };
           var object = {
               url:"/api/login/doLogin",

@@ -132,7 +132,7 @@ const router = new Router({
           name: 'soundCategory',
           component: () => import('@/components/soundcategory/SoundCategory.vue'),
           meta: {
-            title: '音频模块',
+            title: '音频分类',
           }
         },
         {
@@ -140,7 +140,15 @@ const router = new Router({
           name: 'soundDetail',
           component: () => import('@/components/sounddetail/SoundDetail.vue'),
           meta: {
-            title: '音频模块详情',
+            title: '音频二级分类详情',
+          }
+        },
+        {
+          path: '/soundSecondCategory',
+          name: 'soundSecondCategory',
+          component: () => import('@/components/soundsecondcategory/SoundSecondCategory.vue'),
+          meta: {
+            title: '音频二级分类',
           }
         },
       ]

@@ -53,7 +53,7 @@ export default {
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'soundCategory_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
             {label:'编辑',type:'text',auth:'soundCategory_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
-            {label:'分类详情',type:'text',auth:'soundCategory_datails',handle:(row)=>this.routerTo(row)},
+            {label:'一级分类详情',type:'text',auth:'soundCategory_datails',handle:(row)=>this.routerTo(row)},
 						{label:'删除',type:'text',auth:'soundCategory_delete',handle:(row)=>this.deleteOne(row.id)},
 					]}
         ],
@@ -229,13 +229,13 @@ export default {
       this.pageData.selectList = rows;
     },
     /**
-     * 跳转音频详情
+     * 跳转音频二级类别
      * @param {*} row 
      */
     routerTo(row){
       this.$store.commit("setParameters",{key:'categoryId',value:row.id});
       // this.$store.commit("setParameters",{key:'menuType',value:row.menuType});
-      this.$router.push({ name: 'soundDetail'})
+      this.$router.push({ name: 'soundSecondCategory'})
     },
   }
 };

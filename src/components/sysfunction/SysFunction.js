@@ -75,7 +75,7 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-          {type:'Input',label:'功能标识',prop:'functionCode',rules:{required:true,maxLength:30}},
+          {type:'Input',label:'功能标识',prop:'functionCode',rules:{required:true,maxLength:40}},
           {type:'Input',label:'功能名称',prop:'functionName',rules:{required:true,maxLength:30}},
           {type:'Input',label:'功能路径',prop:'functionUrl',rules:{required:true,maxLength:100}},
           {type:'Select',label:'访问规则',prop:'rule',rules:{required:true},options:this.selectUtil.functionRule},
