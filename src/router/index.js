@@ -98,7 +98,7 @@ const router = new Router({
         {
           path: '/tBook',
           name: 'tBook',
-          component: () => import('@/components/tbook/tbook.vue'),
+          component: () => import('@/components/tbook/Tbook.vue'),
           meta: {
             title: '书籍信息',
           }
