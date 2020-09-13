@@ -19,4 +19,4 @@
        @closeModal="closeModal()"></modal>
     </div>
 </template>
-<script src="./soundCategory.js"></script>
+<script src="./SoundCategory.js"></script>

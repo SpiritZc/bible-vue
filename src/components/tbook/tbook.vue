@@ -28,4 +28,4 @@
        @closeModal="closeModal"></modal>
     </div>
 </template>
-<script src="./tBook.js"></script>
+<script src="./TBook.js"></script>
