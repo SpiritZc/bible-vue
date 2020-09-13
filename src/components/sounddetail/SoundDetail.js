@@ -298,6 +298,6 @@ export default {
           this.$refs['modalRef'].$forceUpdate();//在methods中需强制更新，mounted中不需要
         }
       });
-    }
+    },
   }
 };
