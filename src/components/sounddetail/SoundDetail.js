@@ -84,7 +84,7 @@ export default {
           // {type:'Select',label:'用户id',prop:'userId',rules:{required:true},props:{label:'accountName',value:'id'},focus:this.getUserByRole},
           {type:'Input',label:'音频文件名',prop:'soundName',rules:{required:true,maxLength:100}},
           // {type:'Input',label:'音频路径',prop:'',rules:{required:true,maxLength:255}},
-          {type:'Upload',label:'音频路径',prop:'soundUrlList',rules:{required:true},multiple:false,accept:"audio/*",width:'200px',labelWidth:'100px',readonly:true},
+          {type:'Upload',label:'音频路径',prop:'soundUrlList',tips:'请上传音频文件',rules:{required:true},multiple:false,accept:"audio/*",width:'200px',labelWidth:'100px',readonly:true},
 					{type:'Input',label:'音频作者',prop:'soundAuthor',rules:{required:true,maxLength:100}},
         ],
         //modal表单 end
@@ -171,6 +171,11 @@ export default {
       }
       this.commonUtil.doGet(obj).then(response=>{
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
+        if(this.pageData.modalData.soundUrlList == null)
+        {
+          this.pageData.modalData.soundUrlList = [];
+        }
+        this.pageData.modalData.soundUrlList.push({name:response.responseData.soundUrl.substring(response.responseData.soundUrl.lastIndexOf("/")+1),url:response.responseData.soundUrl});
       });
     },
     /**
@@ -192,11 +197,13 @@ export default {
      */    
     save(){
       this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
+        console.log(this.pageData.modalData.soundUrlList)
         if (valid) {
           var params = {
             id:this.pageData.modalData.id,
             categorySecondId:this.pageData.queryData.categorySecondId,//有声类别id
             soundUrl:this.pageData.modalData.soundUrlList[0].url,//音频文件名 
+            duration:this.pageData.modalData.soundUrlList[0].duration,//音频时长
             soundName:this.pageData.modalData.soundName,//音频路径 
             soundAuthor:this.pageData.modalData.soundAuthor,//推文图片路径
           }

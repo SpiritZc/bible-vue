@@ -15,13 +15,16 @@ export default {
         //请求的url end
         //查询表单内容 start
         searchForm:[
-					{type:'Input',label:'二级类别名',prop:'categorySecondName'},
+          {type:'Input',label:'二级类别名',prop:'categorySecondName'},
         ],
         //查询表单内容 end
         //查询条件 start
         queryData:{
           categoryId:"",//一级分类id
-					categorySecondName:"",//二级类别名 
+          categorySecondName:"",//二级类别名 
+          description:"",//描述
+          imgList:[],
+          img:"",
         },
         //查询条件 end
         //查询表单按钮start
@@ -71,12 +74,17 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'二级类别名',prop:'categorySecondName',rules:{required:true,maxLength:50}},
+          {type:'Input',label:'二级类别名',prop:'categorySecondName',rules:{required:true,maxLength:50}},
+          {type:'Input',label:'描述',prop:'description'},
+          {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',readonly:true},
         ],
         //modal表单 end
         //modal 数据 start
         modalData : {//modal页面数据
-					categorySecondName:"",//二级类别名 
+          categorySecondName:"",//二级类别名 
+          description:"",//描述
+          imageList:[],
+          img:"",
         },
         //modal 数据 end
         //modal 按钮 start
@@ -124,7 +132,16 @@ export default {
       this.commonUtil.showModal(this.pageData.modalConfig,type);
       if(type != this.commonConstants.modalType.insert)
       {
+        if(type == this.commonConstants.modalType.detail){
+          this.pageData.modalForm[2].readonly = true;
+        }
+        if(type == this.commonConstants.modalType.update){
+          this.pageData.modalForm[2].readonly = false;
+        }
+       
         this.getDetail(id);
+      }else{
+        this.pageData.modalForm[2].readonly = false;
       }
       
     },
@@ -140,6 +157,11 @@ export default {
         params:{id:id},
       }
       this.commonUtil.doGet(obj).then(response=>{
+        if(this.pageData.modalData.imageList == null)
+        {
+          this.pageData.modalData.imageList = [];
+        }
+        this.pageData.modalData.imageList.push({name:response.responseData.img.substring(response.responseData.img.lastIndexOf("/")+1),url:response.responseData.img});
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
       });
     },
@@ -166,7 +188,9 @@ export default {
           var params = {
             id:this.pageData.modalData.id,
             categoryId:this.pageData.queryData.categoryId,//有声一级类别id
-            categorySecondName:this.pageData.modalData.categorySecondName
+            categorySecondName:this.pageData.modalData.categorySecondName,
+            description:this.pageData.modalData.description,
+            img:this.pageData.modalData.imageList[0].url,
           }
             var obj = {
               params:params,
