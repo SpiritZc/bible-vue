@@ -151,6 +151,14 @@ const router = new Router({
             title: '音频二级分类',
           }
         },
+        {
+          path: '/dailyWord',
+          name: 'dailyWord',
+          component: () => import('@/components/dailyword/DailyWord.vue'),
+          meta: {
+            title: '每日一语',
+          }
+        },
       ]
     },
     {
