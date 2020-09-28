@@ -19,4 +19,4 @@
        @closeModal="closeModal()"></modal>
     </div>
 </template>
-<script src="./dailyWord.js"></script>
+<script src="./DailyWord.js"></script>
