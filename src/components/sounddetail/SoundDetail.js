@@ -58,7 +58,8 @@ export default {
         //表格列表头start
         tableCols:[
 					{label:'音频文件名',prop:'soundName',align:'center'},
-					{label:'音频路径',prop:'soundUrl',align:'center'},
+          {label:'音频路径',prop:'soundUrl',align:'center'},
+          {label:'图片路径',prop:'soundImg',align:'center'},
 					{label:'音频作者',prop:'soundAuthor',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'soundDetail_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
@@ -72,7 +73,7 @@ export default {
           title: "新增", //弹窗标题,值为:新增，查看，编辑
           show: false, //弹框显示
           formEditDisabled:false,//编辑弹窗是否可编辑
-          width:'700px',//弹出框宽度
+          width:'800px',//弹出框宽度
           modalRef:"modalRef",//modal标识
           type:"1"//类型 1新增 2编辑 3保存
         },
@@ -82,10 +83,11 @@ export default {
           // {type:'Select',label:'关联用户',prop:'isAssociateUser',rules:{required:true},options:this.selectUtil.yesNo,},
           // {type:'Select',label:'角色id',prop:'roleId',rules:{required:true},props:{label:'roleName',value:'id'},focus:this.getAllRoles},
           // {type:'Select',label:'用户id',prop:'userId',rules:{required:true},props:{label:'accountName',value:'id'},focus:this.getUserByRole},
-          {type:'Input',label:'音频文件名',prop:'soundName',rules:{required:true,maxLength:100}},
+          {type:'Input',label:'音频文件名',prop:'soundName',rules:{required:true,maxLength:100},labelWidth:'120px'},
           // {type:'Input',label:'音频路径',prop:'',rules:{required:true,maxLength:255}},
-          {type:'Upload',label:'音频路径',prop:'soundUrlList',tips:'请上传音频文件',rules:{required:true},multiple:false,accept:"audio/*",width:'200px',labelWidth:'100px',readonly:true},
-					{type:'Input',label:'音频作者',prop:'soundAuthor',rules:{required:true,maxLength:100}},
+          {type:'Upload',label:'音频路径',prop:'soundUrlList',tips:'请上传音频文件',rules:{required:true},multiple:false,accept:"audio/*",width:'200px',labelWidth:'120px',readonly:true},
+          {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'200px',labelWidth:'120px',readonly:true},
+          {type:'Input',label:'音频作者',prop:'soundAuthor',rules:{required:true,maxLength:100},labelWidth:'120px'},
         ],
         //modal表单 end
         //modal 数据 start
@@ -98,6 +100,8 @@ export default {
           roleId:"",//角色id
           userId:"",//用户id
           soundUrlList:[],//音频文件
+          imageList:[],//
+          soundImg:"",
         },
         //modal 数据 end
         //modal 按钮 start
@@ -147,14 +151,17 @@ export default {
       {
         if(type == this.commonConstants.modalType.detail){
           this.pageData.modalForm[1].readonly = true;
+          this.pageData.modalForm[2].readonly = true;
         }
         if(type == this.commonConstants.modalType.update){
           this.pageData.modalForm[1].readonly = false;
+          this.pageData.modalForm[2].readonly = false;
         }
        
         this.getDetail(id);
       }else{
         this.pageData.modalForm[1].readonly = false;
+        this.pageData.modalForm[2].readonly = false;
       }
       
     },
@@ -176,6 +183,11 @@ export default {
           this.pageData.modalData.soundUrlList = [];
         }
         this.pageData.modalData.soundUrlList.push({name:response.responseData.soundUrl.substring(response.responseData.soundUrl.lastIndexOf("/")+1),url:response.responseData.soundUrl});
+        if(this.pageData.modalData.imageList == null)
+        {
+          this.pageData.modalData.imageList = [];
+        }
+        this.pageData.modalData.imageList.push({name:response.responseData.soundImg.substring(response.responseData.soundImg.lastIndexOf("/")+1),url:response.responseData.soundImg});
       });
     },
     /**
@@ -204,6 +216,7 @@ export default {
             categorySecondId:this.pageData.queryData.categorySecondId,//有声类别id
             soundUrl:this.pageData.modalData.soundUrlList[0].url,//音频文件名 
             duration:this.pageData.modalData.soundUrlList[0].duration,//音频时长
+            soundImg:this.pageData.modalData.imageList[0].url,//图片路径
             soundName:this.pageData.modalData.soundName,//音频路径 
             soundAuthor:this.pageData.modalData.soundAuthor,//推文图片路径
           }
