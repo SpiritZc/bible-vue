@@ -58,7 +58,7 @@ export default {
         tableCols:[
 					{label:'标题',prop:'title',align:'center'},
 					{label:'文章来源作者',prop:'fromAuthor',align:'center'},
-					{label:'推文内容',prop:'content',align:'center'},
+					{label:'推文内容',prop:'content',align:'center',height:'40px',overflow:true},
 					{label:'推文图片路径',prop:'img',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'tweetDetails_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
