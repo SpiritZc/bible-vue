@@ -77,6 +77,7 @@ Vue.prototype.GLOBAL = global_//挂载到Vue实例上面
 import Vant from 'vant';
 import 'vant/lib/index.css';
 Vue.use(Vant);
+
 //包引用------end
 //自定义指令
 Vue.directive('has', {

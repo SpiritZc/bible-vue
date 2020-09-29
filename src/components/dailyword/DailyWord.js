@@ -56,7 +56,7 @@ export default {
 					{label:'标题',prop:'title',align:'center'},
 					{label:'文章来源作者',prop:'fromAuthor',align:'center'},
 					{label:'短文内容',prop:'content',align:'center'},
-					{label:'短文图片路径',prop:'img',align:'center'},
+          {label:'短文图片路径',prop:'img',align:'center',type:"image",popover:true},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'dailyWord_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
 						{label:'编辑',type:'text',auth:'dailyWord_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},

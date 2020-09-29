@@ -58,8 +58,8 @@ export default {
         //表格列表头start
         tableCols:[
 					{label:'音频文件名',prop:'soundName',align:'center'},
-          {label:'音频路径',prop:'soundUrl',align:'center'},
-          {label:'图片路径',prop:'soundImg',align:'center'},
+          {label:'音频路径',prop:'soundUrl',align:'center',type:"audio",audioConfig:(row)=>this.getAudioConfig(row)},
+          {label:'图片路径',prop:'soundImg',align:'center',type:"image",popover:true},
 					{label:'音频作者',prop:'soundAuthor',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'soundDetail_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
@@ -319,5 +319,13 @@ export default {
         }
       });
     },
+    getAudioConfig(row){
+      var obj = {};
+      obj.title = row.soundName
+      obj.author = row.soundAuthor
+      obj.url = row.soundUrl
+      obj.pic = row.soundImg
+      return obj
+    }
   }
 };

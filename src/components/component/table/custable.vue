@@ -91,9 +91,11 @@
                     width="500"
                     >
                     <img :src="scope.row[item.prop]" style="width: 100%"/>
-                    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.prop]" style="height: 100%;width: 100%;border-radius:50%; ">
+                    <img slot="reference" :src="scope.row[item.prop]" :alt="scope.row[item.prop]" style="height: 60px;width: 60px;border-radius:50%; ">
                   </el-popover>
-                   <img v-if="item.type==='image' && !item.popover" :src="scope.row[item.prop]" :alt="scope.row[item.prop]" style="height: 100%;width: 100%;border-radius:50%; ">
+                   <img v-if="item.type==='image' && !item.popover" :src="scope.row[item.prop]" :alt="scope.row[item.prop]" style="height: 60px;width: 60px;border-radius:50%; ">
+                  <!-- 音频 -->
+                  <aplayer autoplay  :music="item.audioConfig && item.audioConfig(scope.row)" v-if="item.type==='audio'" />
                   <!-- 滑块 -->
                   <el-slider v-if="item.type==='slider'" v-model="scope.row[item.prop]" 
                   :disabled="item.isDisabled && item.isDisabled(scope.row)" :size="size || btn.size" 
@@ -123,8 +125,13 @@
 </template>
 
 <script>
+ import Aplayer from 'vue-aplayer'
+
 
 export default {
+  components:{
+    Aplayer
+  },
   props:{
     // 表格型号：mini,medium,small
     size:{type:String,default:'medium'},

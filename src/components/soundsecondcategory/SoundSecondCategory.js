@@ -53,7 +53,8 @@ export default {
         //表格分页信息end
         //表格列表头start
         tableCols:[
-					{label:'二级类别名',prop:'categorySecondName',align:'center'},
+          {label:'二级类别名',prop:'categorySecondName',align:'center'},
+          {label:'二级类别名',prop:'img',align:'center',type:"image",popover:true},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'soundSecondCategory_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
             {label:'编辑',type:'text',auth:'soundSecondCategory_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
