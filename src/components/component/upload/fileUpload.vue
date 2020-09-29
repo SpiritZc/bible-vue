@@ -65,6 +65,7 @@ export default{
             if(response.code == "200")
             {
                 file.url = response.responseData.url;
+                fileList[0].duration = response.responseData.duration;
                 delete file['response'];
                 this.$emit('update:fileList', fileList);
                 this.$parent.clearValidate();//清空父组件的错误信息

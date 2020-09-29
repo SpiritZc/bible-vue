@@ -58,7 +58,7 @@ export default {
         tableCols:[
 					{label:'标题',prop:'title',align:'center'},
 					{label:'文章来源作者',prop:'fromAuthor',align:'center'},
-					{label:'推文内容',prop:'content',align:'center'},
+					{label:'推文内容',prop:'content',align:'center',height:'40px',overflow:true},
 					{label:'推文图片路径',prop:'img',align:'center'},
 					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
 						{label:'查看',type:'text',auth:'tweetDetails_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
@@ -199,9 +199,7 @@ export default {
               topicId:this.pageData.queryData.topicId,//专题id
               title:this.pageData.modalData.title,//标题 
               fromAuthor:this.pageData.modalData.fromAuthor,//文章来源作者 
-              description:this.pageData.modalData.description,//推文内容 
               content:this.pageData.modalData.content,//推文图片路径
-              deploytime:this.pageData.modalData.deploytime,//上架时间 
               img:this.pageData.modalData.imageList[0].url,//推文图片路径 
             }
             var obj = {

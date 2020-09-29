@@ -1,15 +1,6 @@
-
-<!--
- * @Description: 
- * @Version: 1.0
- * @Autor: zhangcheng
- * @Date: 2020-06-15 16:39:44
- * @LastEditors: zhangcheng
- * @LastEditTime: 2020-07-07 19:46:18
---> 
 <template>
     <div  class="_tablepage">
-        <searchForm ref="searchRef" :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
+        <searchForm  :searchForm="pageData.searchForm" :searchData="pageData.queryData" :searchHandle="pageData.searchHandle">
         </searchForm>
        <cusTable  
       :isSelection='true'
@@ -20,12 +11,12 @@
       :tableHandles='pageData.tableHandles'
       :tableData='pageData.tableData'
       :tablePage='pageData.tablePage'
-      @handleCurrentChange='searchtablelist'
+      @handleCurrentChange='searchtablelist()'
       @selectChange='selectChange'></cusTable>
        <modal ref="modalRef" :modalConfig='pageData.modalConfig' 
        :modalForm='pageData.modalForm' :modalData='pageData.modalData' 
        :modalHandles='pageData.modalHandles'
-       @closeModal="closeModal"></modal>
+       @closeModal="closeModal()"></modal>
     </div>
 </template>
-<script src="./tBook.js"></script>
+<script src="./DailyWord.js"></script>

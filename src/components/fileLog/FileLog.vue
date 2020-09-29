@@ -19,4 +19,4 @@
        @closeModal="closeModal()"></modal>
     </div>
 </template>
-<script src="./fileLog.js"></script>
+<script src="./FileLog.js"></script>

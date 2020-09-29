@@ -1,50 +1,36 @@
 export default {
-  name:'fileLog',
+  name:'soundSecondCategory',
   data() {
     return{
       pageData:{
         //请求的url start
         requestUrl:{
-          listApi:"/api/fileLog/getTableList",//获取表格数据api
-          insertApi:"/api/fileLog/insert",//新增用api
-          updateApi:"/api/fileLog/update",//更新用api
-          getDetailApi:"/api/fileLog//getDetail",//获取详情用api
-          deleteOneApi:"/api/fileLog/delete",//单条删除api
-          deleteBatchApi:"/api/fileLog/deletebatch",//批量删除api
+          listApi:"/api/soundSecondCategory/getTableList",//获取表格数据api
+          insertApi:"/api/soundSecondCategory/insert",//新增用api
+          updateApi:"/api/soundSecondCategory/update",//更新用api
+          getDetailApi:"/api/soundSecondCategory/getDetail",//获取详情用api
+          deleteOneApi:"/api/soundSecondCategory/delete",//单条删除api
+          deleteBatchApi:"/api/soundSecondCategory/deletebatch",//批量删除api
         },
         //请求的url end
         //查询表单内容 start
         searchForm:[
-					{type:'Input',label:'文件名',prop:'fileName'},
-					// {type:'Input',label:'文件大小',prop:'fileSize'},
-          {type:'Select',label:'文件操作类型',prop:'type',options:this.selectUtil.fileType},
-					{type:'Select',label:'上传状态',prop:'operateStatus',options:this.selectUtil.fileOperateStatus},
-					// {type:'Input',label:'异常信息',prop:'errorInfo'},
-					// {type:'Input',label:'返回结果',prop:'result'},
-					// {type:'Input',label:'访问路径',prop:'fileUrl'},
-					// {type:'Input',label:'请求机器ip',prop:'operateIp'},
-					// {type:'Input',label:'执行时长',prop:'executeTime'},
-					{type:'Select',label:'请求来源',prop:'menuType',options:this.selectUtil.menuType},
+          {type:'Input',label:'二级类别名',prop:'categorySecondName'},
         ],
         //查询表单内容 end
         //查询条件 start
         queryData:{
-					fileName:"",//文件名 
-					fileSize:"",//文件大小 
-					type:"",//文件操作类型 1上传2下载3删除4查看 
-					operateStatus:"",//上传状态 1上传成功 2上传失败3删除成功4删除失败 
-					errorInfo:"",//异常信息 
-					result:"",//返回结果 
-					fileUrl:"",//访问路径 
-					operateIp:"",//请求机器ip 
-					executeTime:"",//执行时长 
-          requestSource:"",//请求来源 1 后台运营 2其他 默认1 
+          categoryId:"",//一级分类id
+          categorySecondName:"",//二级类别名 
+          description:"",//描述
+          imgList:[],
+          img:"",
         },
         //查询条件 end
         //查询表单按钮start
         searchHandle:[
-          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'fileLog_search'},
-          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'fileLog_search'}
+          {label:'查询',type:'primary',handle:()=>this.searchtablelist(),auth:'soundSecondCategory_search'},
+          {label:'重置',type:'warning',handle:()=>this.resetSearch(),auth:'soundSecondCategory_search'}
         ],
         //查询表单按钮end
         //表格数据start
@@ -52,8 +38,8 @@ export default {
         //表格数据end
         //表格工具栏按钮 start
         tableHandles:[
-          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'fileLog_insert'},
-          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'fileLog_batchdelete'}
+          {label:'新增',type:'primary',handle:()=>this.showModal(this.commonConstants.modalType.insert),auth:'soundSecondCategory_insert'},
+          {label:'批量删除',type:'danger',handle:()=>this.deleteBatch(),auth:'soundSecondCategory_batchdelete'}
         ],
         //表格工具栏按钮 end
         selectList:[],//表格选中的数据
@@ -67,22 +53,13 @@ export default {
         //表格分页信息end
         //表格列表头start
         tableCols:[
-					{label:'文件名',prop:'fileName',align:'center'},
-					// {label:'文件大小',prop:'fileSize',align:'center'},
-					{label:'文件操作类型',prop:'type',align:'center',codeType:'fileType',formatter:this.commonUtil.getTableCodeName},
-					{label:'上传状态',prop:'operateStatus',align:'center',codeType:'fileOperateStatus',formatter:this.commonUtil.getTableCodeName},
-					// {label:'异常信息',prop:'errorInfo',align:'center'},
-					// {label:'返回结果',prop:'result',align:'center'},
-					{label:'访问路径',prop:'fileUrl',align:'center'},
-					{label:'请求机器ip',prop:'operateIp',align:'center'},
-          // {label:'执行时长',prop:'executeTime',align:'center'},
-          
-					{label:'请求来源',prop:'requestSource',align:'center',codeType:'menuType',formatter:this.commonUtil.getTableCodeName},
-					// {label:'操作',prop:'operation',align:'center',type:'button',btnList:[
-					// 	{label:'查看',type:'text',auth:'fileLog_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
-					// 	{label:'编辑',type:'text',auth:'fileLog_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
-					// 	{label:'删除',type:'text',auth:'fileLog_delete',handle:(row)=>this.deleteOne(row.id)},
-					// ]}
+					{label:'二级类别名',prop:'categorySecondName',align:'center'},
+					{label:'操作',prop:'operation',align:'center',type:'button',btnList:[
+						{label:'查看',type:'text',auth:'soundSecondCategory_getdetail',handle:(row)=>this.showModal(this.commonConstants.modalType.detail,row.id)},
+            {label:'编辑',type:'text',auth:'soundSecondCategory_update',handle:(row)=>this.showModal(this.commonConstants.modalType.update,row.id)},
+            {label:'二级分类详情',type:'text',auth:'soundSecondCategory_datails',handle:(row)=>this.routerTo(row)},
+						{label:'删除',type:'text',auth:'soundSecondCategory_delete',handle:(row)=>this.deleteOne(row.id)},
+					]}
         ],
         //表格列表头end
         //modal配置 start
@@ -97,30 +74,17 @@ export default {
         //modal配置 end
         //modal表单 start
         modalForm:[
-					{type:'Input',label:'文件名',prop:'fileName',rules:{required:true,maxLength:200}},
-					{type:'Input',label:'文件大小',prop:'fileSize',rules:{required:true}},
-					{type:'Input',label:'文件操作类型 1上传2下载3删除4查看',prop:'type',rules:{required:true,type:'number'}},
-					{type:'Input',label:'上传状态 1上传成功 2上传失败3删除成功4删除失败',prop:'operateStatus',rules:{required:true,type:'number'}},
-					{type:'Input',label:'异常信息',prop:'errorInfo',rules:{required:true,maxLength:500}},
-					{type:'Input',label:'返回结果',prop:'result',rules:{required:true,maxLength:2000}},
-					{type:'Input',label:'访问路径',prop:'fileUrl',rules:{required:true,maxLength:200}},
-					{type:'Input',label:'请求机器ip',prop:'operateIp',rules:{required:true,maxLength:20}},
-					{type:'Input',label:'执行时长',prop:'executeTime',rules:{required:true,maxLength:50}},
-					{type:'Input',label:'请求来源 1 后台运营 2其他 默认1',prop:'requestSource',rules:{required:true,type:'number'}},
+          {type:'Input',label:'二级类别名',prop:'categorySecondName',rules:{required:true,maxLength:50}},
+          {type:'Input',label:'描述',prop:'description'},
+          {type:'Upload',label:'图片路径',prop:'imageList',rules:{required:true},multiple:false,accept:"image/*",width:'300px',labelWidth:'180px',readonly:true},
         ],
         //modal表单 end
         //modal 数据 start
         modalData : {//modal页面数据
-					fileName:"",//文件名 
-					fileSize:"",//文件大小 
-					type:"",//文件操作类型 1上传2下载3删除4查看 
-					operateStatus:"",//上传状态 1上传成功 2上传失败3删除成功4删除失败 
-					errorInfo:"",//异常信息 
-					result:"",//返回结果 
-					fileUrl:"",//访问路径 
-					operateIp:"",//请求机器ip 
-					executeTime:"",//执行时长 
-					requestSource:"",//请求来源 1 后台运营 2其他 默认1 
+          categorySecondName:"",//二级类别名 
+          description:"",//描述
+          imageList:[],
+          img:"",
         },
         //modal 数据 end
         //modal 按钮 start
@@ -133,6 +97,8 @@ export default {
     }
   },
   mounted(){
+    let categoryId=this.$store.getters.parameters['categoryId'];//获取topicId
+    this.pageData.queryData.categoryId = categoryId;
     this.searchtablelist();
   },
   methods:{
@@ -166,7 +132,16 @@ export default {
       this.commonUtil.showModal(this.pageData.modalConfig,type);
       if(type != this.commonConstants.modalType.insert)
       {
+        if(type == this.commonConstants.modalType.detail){
+          this.pageData.modalForm[2].readonly = true;
+        }
+        if(type == this.commonConstants.modalType.update){
+          this.pageData.modalForm[2].readonly = false;
+        }
+       
         this.getDetail(id);
+      }else{
+        this.pageData.modalForm[2].readonly = false;
       }
       
     },
@@ -182,6 +157,11 @@ export default {
         params:{id:id},
       }
       this.commonUtil.doGet(obj).then(response=>{
+        if(this.pageData.modalData.imageList == null)
+        {
+          this.pageData.modalData.imageList = [];
+        }
+        this.pageData.modalData.imageList.push({name:response.responseData.img.substring(response.responseData.img.lastIndexOf("/")+1),url:response.responseData.img});
         this.commonUtil.coperyProperties(this.pageData.modalData,response.responseData);//数据赋值
       });
     },
@@ -205,8 +185,15 @@ export default {
     save(){
       this.$refs['modalRef'].$refs['modalFormRef'].validate((valid) => {
         if (valid) {
+          var params = {
+            id:this.pageData.modalData.id,
+            categoryId:this.pageData.queryData.categoryId,//有声一级类别id
+            categorySecondName:this.pageData.modalData.categorySecondName,
+            description:this.pageData.modalData.description,
+            img:this.pageData.modalData.imageList[0].url,
+          }
             var obj = {
-              params:this.pageData.modalData,
+              params:params,
               removeEmpty:false,
             }
             if(this.pageData.modalConfig.type == this.commonConstants.modalType.insert)
@@ -272,6 +259,15 @@ export default {
     },
     selectChange(rows){
       this.pageData.selectList = rows;
+    },
+     /**
+     * 跳转音频详情
+     * @param {*} row 
+     */
+    routerTo(row){
+      this.$store.commit("setParameters",{key:'categorySecondId',value:row.id});
+      // this.$store.commit("setParameters",{key:'menuType',value:row.menuType});
+      this.$router.push({ name: 'soundDetail'})
     },
   }
 };
